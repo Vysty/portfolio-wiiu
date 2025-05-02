@@ -8,6 +8,7 @@ export default function HomePage(){
         <div>
             <HomePageHeader/>
             {/*<GameSlot title={"TestSlot"} imageUrl={image}/>*/}
+            <p>test</p>
         </div>
     )
 }

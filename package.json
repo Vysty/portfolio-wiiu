@@ -1,5 +1,5 @@
 {
-  "name": "portefolio",
+  "name": "portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -29,5 +29,6 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
-  }
+  },
+  "packageManager": "pnpm@10.7.1"
 }

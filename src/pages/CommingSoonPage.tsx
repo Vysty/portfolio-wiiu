@@ -38,7 +38,7 @@ export default function CommingSoonPage() {
             </p>
 
             <a
-                href="../../public/ThomasMarieDuval_CV.pdf"
+                href="/ThomasMarieDuval_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 mb-2 inline-block bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-xl transition"
@@ -50,12 +50,12 @@ export default function CommingSoonPage() {
             <div className="flex justify-center gap-5 my-3">
                 <a href="https://www.linkedin.com/in/thomas-marie-duval/" target="_blank" rel="noopener noreferrer"
                    className="flex flex-col justify-center items-center w-12 hover:text-indigo-400">
-                    <img src="../../public/icons/linkedin.svg" alt="Icone" className="size-6" />
+                    <img src="/icons/linkedin.svg" alt="Icone" className="size-6" />
                     <p>LinkedIn</p>
                 </a>
                 <a href="https://github.com/Vysty" target="_blank" rel="noopener noreferrer"
                    className="flex flex-col justify-center items-center w-12 hover:text-indigo-400">
-                    <img src="../../public/icons/github.svg" alt="Icone" className="size-6" />
+                    <img src="/icons/github.svg" alt="Icone" className="size-6" />
                     <p>GitHub</p>
                 </a>
                 <a href="mailto:contact@thomas-marie-duval.fr" className="flex flex-col justify-center items-center w-12 hover:text-indigo-400">

@@ -1,62 +1,74 @@
-import {motion, AnimatePresence} from "framer-motion";
-import {useState} from "react";
-
-type AppData = {
-    id: number;
-    name: string;
-};
-
-const apps: AppData[] = [
-    {id: 1, name: "Mon CV"},
-    {id: 2, name: "Projets"},
-    {id: 3, name: "Contact"},
-];
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import AppTile from '../assets/AppTile.tsx'
+import EmptyTile from '../assets/EmptyTile.tsx'
+import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
 
 export default function WiiUPortfolio() {
-    const [selectedApp, setSelectedApp] = useState<AppData | null>(null);
+    const [activeContent, setActiveContent] = useState<React.ReactNode | null>(
+        null,
+    )
+
+    const handleOpen = (content: React.ReactNode) => {
+        setActiveContent(content)
+    }
 
     return (
-        <div className="relative flex flex-col h-screen w-screen bg-gray-900 text-white">
-            {/* Top bar */}
-            <header className="p-4 bg-gray-800">Wii U Portfolio</header>
+        <div className="relative flex flex-col h-screen">
+            {/* Barre du haut */}
+            <header className="flex justify-between p-4 bg-red-400 ">
+                <p>Profile Picture</p>
+                <p className={'text-center'}>
+                    ....................................
+                </p>
+                <ThemeToggleButton />
+            </header>
 
-            {/* App Grid */}
+            {/* Grille d'apps */}
             <main className="flex-grow overflow-x-auto p-6 flex space-x-6">
-                {apps.map((app) => (
-                    <motion.div
-                        key={app.id}
-                        whileHover={{scale: 1.1}}
-                        onClick={() => setSelectedApp(app)}
-                        className="w-32 h-32 bg-blue-500 rounded-lg flex items-center justify-center cursor-pointer"
-                    >
-                        {app.name}
-                    </motion.div>
-                ))}
+                <AppTile
+                    label="Mon CV"
+                    icon="/PlaceHolderImage.jpg"
+                    content={<div>Contenu d'un projet</div>}
+                    onOpen={handleOpen}
+                />
+                <AppTile
+                    label="Projets"
+                    icon="/PlaceHolderImage.jpg"
+                    content={<div>Contenu des projets</div>}
+                    onOpen={handleOpen}
+                />
+                <AppTile
+                    label="Contact"
+                    icon="/PlaceHolderImage.jpg"
+                    content={<div>Formulaire de contact</div>}
+                    onOpen={handleOpen}
+                />
+                <EmptyTile />
             </main>
 
-            {/* Bottom bar */}
+            {/* Barre du bas */}
             <footer className="p-4 bg-gray-800">© 2025</footer>
 
-            {/* Overlay App View */}
+            {/* Overlay dynamique */}
             <AnimatePresence>
-                {selectedApp && (
+                {activeContent && (
                     <motion.div
-                        key="appview"
-                        initial={{opacity: 0, scale: 0.9}}
-                        animate={{opacity: 1, scale: 1}}
-                        exit={{opacity: 0, scale: 0.9}}
-                        className="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50"
-                        onClick={() => setSelectedApp(null)}
+                        key="overlay"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
+                        onClick={() => setActiveContent(null)}
                     >
                         <div
-                            className="bg-white text-black p-8 rounded-xl shadow-lg text-center"
-                            onClick={(e) => e.stopPropagation()} // évite de fermer quand on clique dans la fenêtre
+                            className="bg-white text-black rounded-lg p-8 shadow-lg"
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            <h2 className="text-2xl font-bold mb-4">{selectedApp.name}</h2>
-                            <p>Contenu de l'app ici</p>
+                            {activeContent}
                             <button
                                 className="mt-6 px-4 py-2 bg-gray-800 text-white rounded"
-                                onClick={() => setSelectedApp(null)}
+                                onClick={() => setActiveContent(null)}
                             >
                                 Fermer
                             </button>
@@ -65,5 +77,5 @@ export default function WiiUPortfolio() {
                 )}
             </AnimatePresence>
         </div>
-    );
+    )
 }

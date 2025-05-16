@@ -49,16 +49,16 @@ export default function CommingSoonPage() {
             {/* Réseaux sociaux*/}
             <div className="flex justify-center gap-5 my-3">
                 <a href="https://www.linkedin.com/in/thomas-marie-duval/" target="_blank" rel="noopener noreferrer"
-                   className="group flex flex-col justify-center items-center w-12">
+                   className="group flex flex-col justify-center items-center w-16">
                     <img src="/icons/linkedin.svg" alt="Icone" className="size-6 group-hover:brightness-75 transition" />
                     <p className={"group-hover:text-indigo-400"}>LinkedIn</p>
                 </a>
                 <a href="https://github.com/Vysty" target="_blank" rel="noopener noreferrer"
-                   className="group flex flex-col justify-center items-center w-12">
+                   className="group flex flex-col justify-center items-center w-16">
                     <img src="/icons/github.svg" alt="Icone" className="size-6 group-hover:brightness-75 transition" />
                     <p className={"group-hover:text-indigo-400"}>GitHub</p>
                 </a>
-                <a href="mailto:contact@thomas-marie-duval.fr" className="group flex flex-col justify-center items-center w-12">
+                <a href="mailto:contact@thomas-marie-duval.fr" className="group flex flex-col justify-center items-center w-16">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" className="size-6 group-hover:brightness-75 transition">
                         <path stroke-linecap="round" stroke-linejoin="round"

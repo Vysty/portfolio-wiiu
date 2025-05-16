@@ -15,6 +15,7 @@ body {
     /*--font-TOCHANGE : var(--TOCHANGE);*/
 }
 
+/*noinspection CssUnusedSymbol*/
 .light {
     --background: var(--color-white);
     --foreground: var(--color-black);
@@ -22,6 +23,7 @@ body {
     /*--TOCHANGE*/
 }
 
+/*noinspection CssUnusedSymbol*/
 .dark {
     --background: var(--color-black);
     --foreground: var(--color-white);

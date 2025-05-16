@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@custom-variant hover (&:hover); /*juste un fix pour tailwind 4 consernant les périphèriques tactiles */
+
+body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    /*font-family: var(TOCHANGE), sans-serif;*/
+}
+
+@theme inline {
+    /*Tailwind Theme*/
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    /*--font-TOCHANGE : var(--TOCHANGE);*/
+}
+
+.light {
+    --background: var(--color-white);
+    --foreground: var(--color-black);
+
+    /*--TOCHANGE*/
+}
+
+.dark {
+    --background: var(--color-black);
+    --foreground: var(--color-white);
+}
+
+
+

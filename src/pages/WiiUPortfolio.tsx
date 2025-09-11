@@ -13,43 +13,65 @@ export default function WiiUPortfolio() {
         setActiveContent(content)
     }
 
+    const apps = [
+        // Liste des applications affiché
+        {
+            label: 'Mon CV',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Contenu d'un projet</div>,
+        },
+        {
+            label: 'Projets',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Contenu des projets</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+    ]
+
     return (
-        <div className="relative flex flex-col h-screen">
-            {/* Barre du haut */}
-            <header className="flex justify-between p-4 bg-red-400 ">
-                <p>Profile Picture</p>
-                <p className={'text-center'}>
-                    ....................................
-                </p>
+        <div className={'flex h-screen w-screen'}>
+            <div className={'w-42 h-screen'}>
+                <p>Profile Picture placement</p>
+            </div>
+            {/*Left side*/}
+            <div className={'grow h-screen flex flex-col'}>
+                <header className="h-36 flex justify-center p-4 bg-red-400 ">
+                    <p className={'text-center'}>
+                        ....................................
+                    </p>
+                </header>
+                {/* Grille d'apps */}
+                <main
+                    className="grow grid grid-cols-5 grid-rows-3 gap-6 p-6 overflow-x-auto"
+                    style={{ width: '100%', height: '100%' }}
+                >
+                    {apps
+                        .map((app) => (
+                            <AppTile
+                                key={app.label}
+                                label={app.label}
+                                icon={app.icon}
+                                content={app.content}
+                                onOpen={handleOpen}
+                            />
+                        ))
+                        .concat(
+                            Array.from({ length: 15 - apps.length }, (_, i) => (
+                                <EmptyTile key={`empty-${i}`} />
+                            )),
+                        )}
+                </main>
+                <footer className="h-36 p-2 bg-gray-800">© 2025</footer>
+            </div>{' '}
+            {/*Center div*/}
+            <div className={'w-42 h-screen p'}>
                 <ThemeToggleButton />
-            </header>
-
-            {/* Grille d'apps */}
-            <main className="flex-grow overflow-x-auto p-6 flex space-x-6">
-                <AppTile
-                    label="Mon CV"
-                    icon="/PlaceHolderImage.jpg"
-                    content={<div>Contenu d'un projet</div>}
-                    onOpen={handleOpen}
-                />
-                <AppTile
-                    label="Projets"
-                    icon="/PlaceHolderImage.jpg"
-                    content={<div>Contenu des projets</div>}
-                    onOpen={handleOpen}
-                />
-                <AppTile
-                    label="Contact"
-                    icon="/PlaceHolderImage.jpg"
-                    content={<div>Formulaire de contact</div>}
-                    onOpen={handleOpen}
-                />
-                <EmptyTile />
-            </main>
-
-            {/* Barre du bas */}
-            <footer className="p-4 bg-gray-800">© 2025</footer>
-
+            </div>
+            {/*Right side*/}
             {/* Overlay dynamique */}
             <AnimatePresence>
                 {activeContent && (

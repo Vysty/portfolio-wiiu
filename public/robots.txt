@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.thomas-marie-duval.fr/sitemap.xml
+Sitemap: https://thomas-marie-duval.fr/sitemap.xml

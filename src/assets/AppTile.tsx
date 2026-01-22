@@ -34,7 +34,7 @@ export default function AppTile({
             variants={tileVariants}
             onClick={() => onOpen(content)}
             // relative pour ne pas couper la bulle de texte
-            className={`relative w-40 h-40 rounded-lg flex flex-col items-center justify-center cursor-pointer shadow-md border-12 border-tilescolor/80 bg-tilescolor/80 hover:border-tileselected hover:bg-tileselected`}
+            className={`relative w-44 h-44 rounded-lg flex flex-col items-center justify-center cursor-pointer shadow-md border-12 border-tilescolor/80 bg-tilescolor/80 hover:border-tileselected hover:bg-tileselected`}
         >
             {/* --- Bulle de texte variants hover --- */}
             {/*Possiblement remettre sur la bulle : "left-1/2 -translate-x-1/2" ???*/}

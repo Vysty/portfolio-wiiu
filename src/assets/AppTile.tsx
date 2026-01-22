@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import React from 'react'
 import { tileVariants } from '../styles/FramerConsts.ts'
 
@@ -10,7 +10,7 @@ export type AppTileProps = {
 }
 
 // Définition des Variants pour la bulle de texte si on l'affiche ou pas
-const bubbleVariants = {
+const bubbleVariants: Variants = {
     rest: { opacity: 0, y: 10, scale: 0.8, display: 'none' },
     hover: {
         opacity: 1,

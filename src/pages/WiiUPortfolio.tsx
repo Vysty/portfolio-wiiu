@@ -30,15 +30,47 @@ export default function WiiUPortfolio() {
             icon: '/PlaceHolderImage.jpg',
             content: <div>Formulaire de contact</div>,
         },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
+        {
+            label: 'Contact',
+            icon: '/PlaceHolderImage.jpg',
+            content: <div>Formulaire de contact</div>,
+        },
     ]
 
     return (
         <div className={'flex h-screen w-screen'}>
+            {/*Left side*/}
             <div className={'w-42 h-screen'}>
                 <p>Profile Picture placement</p>
             </div>
-            {/*Left side*/}
+            {/*Center*/}
             <div className={'grow h-screen flex flex-col'}>
+                {/*Center Header*/}
                 <header className="h-36 flex justify-center p-4 bg-red-400 ">
                     <p className={'text-center'}>
                         ....................................
@@ -46,7 +78,7 @@ export default function WiiUPortfolio() {
                 </header>
                 {/* Grille d'apps */}
                 <main
-                    className="grow grid grid-cols-5 grid-rows-3 gap-6 p-6 overflow-x-auto"
+                    className="grow grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
                     style={{ width: '100%', height: '100%' }}
                 >
                     {apps
@@ -65,14 +97,14 @@ export default function WiiUPortfolio() {
                             )),
                         )}
                 </main>
+                {/*Center Footer*/}
                 <footer className="h-36 p-2 bg-gray-800">© 2025</footer>
             </div>{' '}
-            {/*Center div*/}
+            {/*Right side*/}
             <div className={'w-42 h-screen p'}>
                 <ThemeToggleButton />
             </div>
-            {/*Right side*/}
-            {/* Overlay dynamique */}
+            {/* Overlay dynamique (quand tu clique sur une case*/}
             <AnimatePresence>
                 {activeContent && (
                     <motion.div

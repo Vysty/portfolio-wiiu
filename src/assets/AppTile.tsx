@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React from 'react'
+import { tileVariants } from '../styles/FramerConsts.ts'
 
 export type AppTileProps = {
     label: string
@@ -8,13 +9,7 @@ export type AppTileProps = {
     onOpen: (content: React.ReactNode) => void
 }
 
-// Définition des animations pour la div principale
-const tileVariants = {
-    rest: { scale: 1, zIndex: 0 },
-    hover: { scale: 1.1, zIndex: 10 },
-}
-
-// Définition des Varian pour la bulle de texte si on l'affiche ou pas
+// Définition des Variants pour la bulle de texte si on l'affiche ou pas
 const bubbleVariants = {
     rest: { opacity: 0, y: 10, scale: 0.8, display: 'none' },
     hover: {
@@ -52,7 +47,7 @@ export default function AppTile({
                         {label}
                     </span>
                     {/* Le petit triangle (flèche) en bas de la bulle */}
-                    <div className="absolute -bottom-2 w-4 h-4 bg-white rotate-45 border-r-2 border-b-2 border-gray-100 transform translate-y-[-2px]"></div>
+                    <div className="absolute -bottom-2 w-4 h-4 bg-white rotate-45 border-r-2 border-b-2 border-gray-100 translate-y-[-2px]"></div>
                 </div>
             </motion.div>
             {/* --- FIN DE LA BULLE--- */}

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import AppTile from '../assets/AppTile.tsx'
 import EmptyTile from '../assets/EmptyTile.tsx'
 import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
+import ProfileTile from '../assets/ProfileTile.tsx'
 
 export default function WiiUPortfolio() {
     const [activeContent, setActiveContent] = useState<React.ReactNode | null>(
@@ -65,8 +66,13 @@ export default function WiiUPortfolio() {
     return (
         <div className={'flex h-screen w-screen'}>
             {/*Left side*/}
-            <div className={'w-42 h-screen'}>
-                <p>Profile Picture placement</p>
+            <div
+                className={
+                    'w-42 h-screen flex flex-col items-center justify-start p-4'
+                }
+            >
+                {/*<p>Profile Picture placement</p>*/}
+                <ProfileTile />
             </div>
             {/*Center*/}
             <div className={'grow h-screen flex flex-col'}>
@@ -101,10 +107,14 @@ export default function WiiUPortfolio() {
                 <footer className="h-36 p-2 bg-gray-800">© 2025</footer>
             </div>{' '}
             {/*Right side*/}
-            <div className={'w-42 h-screen p'}>
+            <div
+                className={
+                    'w-42 h-screen flex flex-col items-center justify-start p-4'
+                }
+            >
                 <ThemeToggleButton />
             </div>
-            {/* Overlay dynamique (quand tu clique sur une case*/}
+            {/* Overlay dynamique (quand tu cliques sur une case*/}
             <AnimatePresence>
                 {activeContent && (
                     <motion.div

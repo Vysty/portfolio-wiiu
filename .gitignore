@@ -21,4 +21,5 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw?.giti
+/package-lock.json

@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { tileVariants } from '../styles/FramerConsts.ts'
 
 export default function ThemeToggleButton() {
     const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
@@ -34,11 +36,14 @@ export default function ThemeToggleButton() {
     if (!theme) return null
 
     return (
-        <button
+        <motion.button
+            initial="rest"
+            whileHover="hover"
+            variants={tileVariants}
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="px-4 py-2 rounded bg-foreground text-background transition duration-300"
+            className="px-6 py-4 rounded-lg bg-tilescolor hover:bg-foreground hover:text-tilescolor text-backforeground transition duration-300 hover:cursor-pointer"
         >
-            {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
-        </button>
+            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+        </motion.button>
     )
 }

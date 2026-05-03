@@ -1,40 +1,39 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <script>
-        (function () {
-            try {
-                const storedTheme = localStorage.getItem("theme");
+      ;(function () {
+        try {
+          const storedTheme = localStorage.getItem('theme')
 
-                if (storedTheme === "dark") {
-                    document.documentElement.classList.add("dark");
-                } else if (storedTheme === "light") {
-                    document.documentElement.classList.remove("dark");
-                } else {
-                    // Pas de préférence utilisateur ? -> utilise le thème système
-                    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                    if (prefersDark) {
-                        document.documentElement.classList.add("dark");
-                    } else {
-                        document.documentElement.classList.remove("dark");
-                    }
-                }
-            } catch (_) {
-                // En cas d'erreur, fallback en light mode
-                document.documentElement.classList.remove("dark");
+          if (storedTheme === 'dark') {
+            document.documentElement.classList.add('dark')
+          } else if (storedTheme === 'light') {
+            document.documentElement.classList.remove('dark')
+          } else {
+            // Pas de préférence utilisateur ? -> utilise le thème système
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+            if (prefersDark) {
+              document.documentElement.classList.add('dark')
+            } else {
+              document.documentElement.classList.remove('dark')
             }
-        })();
+          }
+        } catch (_) {
+          // En cas d'erreur, fallback en light mode
+          document.documentElement.classList.remove('dark')
+        }
+      })()
     </script>
 
-
-    <meta charset="UTF-8"/>
-    <link rel="icon" href="/favicon.ico"/>
-    <link rel="canonical" href="https://thomas-marie-duval.fr/"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href="https://thomas-marie-duval.fr/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Thomas Marie--Duval</title>
-</head>
-<body>
-<div id="root"></div>
-<script type="module" src="/src/main.tsx"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

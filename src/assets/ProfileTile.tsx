@@ -19,7 +19,8 @@ export default function ProfileTile() {
         alt={'Image de profile'}
         className="w-full h-full object-cover rounded-lg overflow-hidden "
       />
-      <Bubble pos={'bottom'} label={'Mon Profil'} />
+      <Bubble pos={'bottom'} label={'Mon CV'} />{' '}
+      {/* TODO : A l'avenir faire une page avec une présentation et accès au CV après.*/}
     </motion.a>
   )
 }

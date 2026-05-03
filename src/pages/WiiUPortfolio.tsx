@@ -64,7 +64,7 @@ export default function WiiUPortfolio() {
     ]
 
     return (
-        <div className={'flex h-screen w-screen'}>
+        <div className={'flex h-screen w-screen overflow-hidden'}>
             {/*Left side*/}
             <div
                 className={
@@ -104,7 +104,7 @@ export default function WiiUPortfolio() {
                         )}
                 </main>
                 {/*Center Footer*/}
-                <footer className="h-36 p-2 bg-gray-800">© 2025</footer>
+                <footer className="h-36 p-2 bg-gray-800">© 2026</footer>
             </div>{' '}
             {/*Right side*/}
             <div

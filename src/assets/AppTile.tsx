@@ -8,9 +8,10 @@ export type AppTileProps = {
   icon: string
   content: React.ReactNode
   onOpen: (content: React.ReactNode) => void
+  bubblePos: 'top' | 'bottom'
 }
 
-export default function AppTile({ label, icon, content, onOpen }: AppTileProps) {
+export default function AppTile({ label, icon, content, onOpen, bubblePos }: AppTileProps) {
   return (
     <motion.div
       initial="rest"
@@ -20,7 +21,7 @@ export default function AppTile({ label, icon, content, onOpen }: AppTileProps) 
       // relative pour ne pas couper la bulle de texte
       className={`relative w-44 h-44 rounded-lg flex flex-col items-center justify-center cursor-pointer shadow-md border-12 border-tilescolor/80 bg-tilescolor/80 hover:border-tileselected hover:bg-tileselected`}
     >
-      <Bubble pos={'top'} label={label} />
+      <Bubble pos={bubblePos} label={label} />
 
       <img
         src={icon}

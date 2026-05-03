@@ -66,7 +66,6 @@ export default function WiiUPortfolio() {
         {currentPage > 0 && (
           <button
             onClick={() => setCurrentPage((curr) => curr - 1)}
-            // Ajout de top-1/2 et -translate-y-1/2 ici 👇
             className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
             aria-label="Page précédente"
           >
@@ -89,18 +88,18 @@ export default function WiiUPortfolio() {
       {/*Center*/}
       <div className={'grow h-screen flex flex-col relative'}>
         {/*Center Header - Indicateurs de pages façon Wii U*/}
-        <header className="h-36 flex flex-col items-center justify-end pb-4 bg-red-400">
+        <header className="h-20 flex flex-col items-center justify-end pb-4 z-0">
           <div className="flex space-x-4 items-center">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentPage(index)}
                 aria-label={`Aller à la page ${index + 1}`}
-                className={`w-5 h-5 rounded-md border-2 border-white transition-all duration-300 cursor-pointer shadow-sm
+                className={`w-6 h-6 rounded-md transition-all duration-300 cursor-pointer shadow-sm
                   ${
                     currentPage === index
-                      ? 'bg-white scale-110 shadow-white/50 drop-shadow-md'
-                      : 'bg-transparent hover:bg-white/30'
+                      ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'
+                      : 'bg-gray-300 hover:bg-gray-400'
                   }
                 `}
               />
@@ -129,6 +128,7 @@ export default function WiiUPortfolio() {
                       icon={app.icon}
                       content={app.content}
                       onOpen={handleOpen}
+                      bubblePos={index < 5 ? 'bottom' : 'top'}
                     />
                   )
                 } else {

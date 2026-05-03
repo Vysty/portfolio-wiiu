@@ -23,7 +23,7 @@ export default function Bubble({ pos, label }: { pos: 'top' | 'bottom'; label: s
   return (
     <motion.div
       variants={bubbleVariants}
-      className={`absolute ${bubblePositionClass} w-max max-w-[180px] pointer-events-none`}
+      className={`absolute ${bubblePositionClass} w-max max-w-45 pointer-events-none`}
     >
       <div className="bg-white text-gray-800 px-4 py-2 rounded-2xl shadow-xl border-2 border-gray-100 flex flex-col items-center">
         <span className="text-lg font-sans font-semibold whitespace-nowrap">{label}</span>

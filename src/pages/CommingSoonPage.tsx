@@ -13,7 +13,7 @@ export default function CommingSoonPage() {
   const currentSentence = listOfSentences[Math.floor(Math.random() * listOfSentences.length)]
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-900 to-gray-800 flex flex-col items-center justify-center text-white px-4">
+    <div className="min-h-screen w-full bg-linear-to-br from-slate-900 to-gray-800 flex flex-col items-center justify-center text-white px-4">
       <h1 className="text-1xl md:text-4xl font-semibold mb-2 tracking-wide">Thomas Marie--Duval</h1>
 
       <h2

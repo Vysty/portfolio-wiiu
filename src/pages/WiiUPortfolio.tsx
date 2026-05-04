@@ -17,26 +17,33 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
           key="splash-screen"
           initial={{ y: 0 }}
           exit={{ y: '100%' }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
           className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl"
         >
           <div className="flex flex-col items-center">
-            <h1 className="text-6xl font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">Wii U</h1>
+            <img
+              src={'/Photo.jpg'}
+              alt={'Image de profile'}
+              className="w-52 h-52 object-cover rounded-3xl border-12 border-tileselected bg-tileselected overflow-hidden"
+            />
+            <h1 className="text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
+              Thomas MARIE--DUVAL
+            </h1>
             <div className="mt-8 flex space-x-2">
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0 }}
-                className="w-3 h-3 bg-cyan-400 rounded-full"
+                className="w-5 h-5 bg-cyan-400 rounded-full"
               />
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
-                className="w-3 h-3 bg-cyan-400 rounded-full"
+                className="w-5 h-5 bg-cyan-400 rounded-full"
               />
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
-                className="w-3 h-3 bg-cyan-400 rounded-full"
+                className="w-5 h-5 bg-cyan-400 rounded-full"
               />
             </div>
           </div>
@@ -180,7 +187,7 @@ export default function WiiUPortfolio() {
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-6 h-6 rounded-md transition-all duration-300 cursor-pointer shadow-sm
+                  className={`w-5 h-5 rounded-md transition-all duration-300 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'

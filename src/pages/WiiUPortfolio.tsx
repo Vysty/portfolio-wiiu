@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import AppTile from '../assets/AppTile.tsx'
 import EmptyTile from '../assets/EmptyTile.tsx'
@@ -8,11 +8,92 @@ import ProfileTile from '../assets/ProfileTile.tsx'
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
 
+// --- Splash Screen ---
+function SplashScreen({ isLoading }: { isLoading: boolean }) {
+  return (
+    <AnimatePresence>
+      {isLoading && (
+        <motion.div
+          key="splash-screen"
+          initial={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
+          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl"
+        >
+          <div className="flex flex-col items-center">
+            <h1 className="text-6xl font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">Wii U</h1>
+            <div className="mt-8 flex space-x-2">
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0 }}
+                className="w-3 h-3 bg-cyan-400 rounded-full"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
+                className="w-3 h-3 bg-cyan-400 rounded-full"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
+                className="w-3 h-3 bg-cyan-400 rounded-full"
+              />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// --- Modal ---
+function DynamicOverlay({ activeContent, onClose }: { activeContent: React.ReactNode | null; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {activeContent && (
+        <motion.div
+          key="overlay"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
+          onClick={onClose}
+        >
+          <div
+            className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {activeContent}
+            <button
+              className="mt-6 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors"
+              onClick={onClose}
+            >
+              Fermer
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// --- Fonction principale ---
 export default function WiiUPortfolio() {
   const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
 
-  // État pour gérer la page actuelle (commence à 0)
+  // Gestion de la page actuelle
   const [currentPage, setCurrentPage] = useState(0)
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Minuteur pour le chargement de la page
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000) // 2000 millisecondes = 2 secondes
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleOpen = (content: React.ReactNode) => {
     setActiveContent(content)
@@ -26,7 +107,7 @@ export default function WiiUPortfolio() {
   }
 
   // --- LISTE DES APPLICATIONS ---
-  const apps: App[] = [
+  const APPS: App[] = [
     {
       position: 2,
       label: 'Mon CV',
@@ -48,156 +129,136 @@ export default function WiiUPortfolio() {
   ]
 
   // --- LOGIQUE DE PAGINATION ET DE GRILLE ---
-  const highestPosition = apps.length > 0 ? Math.max(...apps.map((app) => app.position)) : 0
+  const highestPosition = APPS.length > 0 ? Math.max(...APPS.map((app) => app.position)) : 0
   const totalPages = Math.max(1, Math.ceil((highestPosition + 1) / ITEMS_PER_PAGE))
 
   const gridSlots = Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => {
     const absolutePosition = currentPage * ITEMS_PER_PAGE + index
-    return apps.find((app) => app.position === absolutePosition) || null
+    return APPS.find((app) => app.position === absolutePosition) || null
   })
 
   return (
     <div className={'flex h-screen w-screen overflow-hidden bg-background'}>
-      {/*Left side*/}
-      <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
-        <ProfileTile />
+      <SplashScreen isLoading={isLoading} />
 
-        {/* Flèche Gauche (cachée si on est sur la page 0) */}
-        {currentPage > 0 && (
-          <button
-            onClick={() => setCurrentPage((curr) => curr - 1)}
-            className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
-            aria-label="Page précédente"
-          >
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      {/* ---- Affichage de la page ---- */}
+      <AnimatePresence>
+        {/*Left side*/}
+        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+          <ProfileTile />
+
+          {/* Flèche Gauche */}
+          {currentPage > 0 && (
+            <button
+              onClick={() => setCurrentPage((curr) => curr - 1)}
+              className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              aria-label="Page précédente"
             >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-          </button>
-        )}
-      </div>
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+          )}
+        </div>
 
-      {/*Center*/}
-      <div className={'grow h-screen flex flex-col relative'}>
-        {/*Center Header - Indicateurs de pages façon Wii U*/}
-        <header className="h-20 flex flex-col items-center justify-end pb-4 z-0">
-          <div className="flex space-x-4 items-center">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index)}
-                aria-label={`Aller à la page ${index + 1}`}
-                className={`w-6 h-6 rounded-md transition-all duration-300 cursor-pointer shadow-sm
+        {/*Center*/}
+        <div className={'grow h-screen flex flex-col relative'}>
+          {/*Center Header - Indicateurs de pages*/}
+          <header className="h-20 flex flex-col items-center justify-end pb-4 z-0">
+            <div className="flex space-x-4 items-center">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  aria-label={`Aller à la page ${index + 1}`}
+                  className={`w-6 h-6 rounded-md transition-all duration-300 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'
                       : 'bg-gray-300 hover:bg-gray-400'
                   }
                 `}
-              />
-            ))}
-          </div>
-        </header>
+                />
+              ))}
+            </div>
+          </header>
 
-        {/* --- ZONE PRINCIPALE : Grille --- */}
-        <div className="grow relative overflow-hidden flex items-center justify-center">
-          {/* Grille animée */}
-          <AnimatePresence mode="wait">
-            <motion.main
-              key={currentPage}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
-            >
-              {gridSlots.map((app, index) => {
-                if (app) {
-                  return (
-                    <AppTile
-                      key={app.label}
-                      label={app.label}
-                      icon={app.icon}
-                      content={app.content}
-                      onOpen={handleOpen}
-                      bubblePos={index < 5 ? 'bottom' : 'top'}
-                    />
-                  )
-                } else {
-                  return <EmptyTile key={`empty-${currentPage}-${index}`} />
-                }
-              })}
-            </motion.main>
-          </AnimatePresence>
+          {/* --- ZONE PRINCIPALE : Grille --- */}
+          <div className="grow relative overflow-hidden flex items-center justify-center">
+            {/* Grille animée */}
+            <AnimatePresence mode="wait">
+              <motion.main
+                key={currentPage}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
+              >
+                {gridSlots.map((app, index) => {
+                  if (app) {
+                    return (
+                      <AppTile
+                        key={app.label}
+                        label={app.label}
+                        icon={app.icon}
+                        content={app.content}
+                        onOpen={handleOpen}
+                        bubblePos={index < 5 ? 'bottom' : 'top'}
+                      />
+                    )
+                  } else {
+                    return <EmptyTile key={`empty-${currentPage}-${index}`} />
+                  }
+                })}
+              </motion.main>
+            </AnimatePresence>
+          </div>
+
+          {/*Center Footer*/}
+          <footer className="h-36 flex items-center justify-center p-2 bg-gray-800 text-white">
+            <p>© 2026</p>
+          </footer>
         </div>
 
-        {/*Center Footer*/}
-        <footer className="h-36 flex items-center justify-center p-2 bg-gray-800 text-white">
-          <p>© 2026</p>
-        </footer>
-      </div>
-
-      {/*Right side*/}
-      <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
-        <ThemeToggleButton />
-        {/* Flèche Droite (cachée si on est sur la dernière page) */}
-        {currentPage < totalPages - 1 && (
-          <button
-            onClick={() => setCurrentPage((curr) => curr + 1)}
-            // Ajout de top-1/2 et -translate-y-1/2 ici 👇
-            className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
-            aria-label="Page suivante"
-          >
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+        {/*Right side*/}
+        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+          <ThemeToggleButton />
+          {/* Flèche Droite */}
+          {currentPage < totalPages - 1 && (
+            <button
+              onClick={() => setCurrentPage((curr) => curr + 1)}
+              className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              aria-label="Page suivante"
             >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </button>
-        )}
-      </div>
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          )}
+        </div>
+      </AnimatePresence>
 
       {/* Overlay dynamique */}
-      <AnimatePresence>
-        {activeContent && (
-          <motion.div
-            key="overlay"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
-            onClick={() => setActiveContent(null)}
-          >
-            <div
-              className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-full mx-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {activeContent}
-              <button
-                className="mt-6 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors"
-                onClick={() => setActiveContent(null)}
-              >
-                Fermer
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <DynamicOverlay activeContent={activeContent} onClose={() => setActiveContent(null)} />
     </div>
   )
 }

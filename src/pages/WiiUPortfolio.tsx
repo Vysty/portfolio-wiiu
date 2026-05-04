@@ -26,7 +26,7 @@ export default function WiiUPortfolio() {
   }
 
   // --- LISTE DES APPLICATIONS ---
-  const apps = [
+  const apps: App[] = [
     {
       position: 2,
       label: 'Mon CV',

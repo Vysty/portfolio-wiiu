@@ -218,6 +218,29 @@ export default function WiiUPortfolio() {
   const highestPosition = APPS.length > 0 ? Math.max(...APPS.map((app) => app.position)) : 0
   const totalPages = Math.max(1, Math.ceil((highestPosition + 1) / ITEMS_PER_PAGE))
 
+  // Gestion du scroll à la souris pour changer de page
+  useEffect(() => {
+    if (activeContent) return // Ne pas permettre le scroll si un modal est actif
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+
+      if (e.deltaY > 0) {
+        // Scroll vers le bas = page suivante
+        setCurrentPage((curr) => (curr < totalPages - 1 ? curr + 1 : curr))
+      } else if (e.deltaY < 0) {
+        // Scroll vers le haut = page précédente
+        setCurrentPage((curr) => (curr > 0 ? curr - 1 : curr))
+      }
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel)
+    }
+  }, [activeContent, totalPages])
+
   const gridSlots = Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => {
     const absolutePosition = currentPage * ITEMS_PER_PAGE + index
     return APPS.find((app) => app.position === absolutePosition) || null
@@ -237,12 +260,12 @@ export default function WiiUPortfolio() {
           {currentPage > 0 && (
             <button
               onClick={() => setCurrentPage((curr) => curr - 1)}
-              className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page précédente"
             >
               <svg
-                width="36"
-                height="36"
+                width="48"
+                height="48"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -314,8 +337,9 @@ export default function WiiUPortfolio() {
 
           {/*Center Footer*/}
           <footer className="h-36 flex items-center justify-center gap-10 p-2 pb-4">
-            {footerApps.map((app) => (
+            {footerApps.map((app, index) => (
               <FooterIcon
+                key={index}
                 label={app.label}
                 icon={app.icon}
                 content={app.content}
@@ -335,12 +359,12 @@ export default function WiiUPortfolio() {
           {currentPage < totalPages - 1 && (
             <button
               onClick={() => setCurrentPage((curr) => curr + 1)}
-              className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page suivante"
             >
               <svg
-                width="36"
-                height="36"
+                width="48"
+                height="48"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

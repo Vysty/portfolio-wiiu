@@ -208,7 +208,7 @@ export default function WiiUPortfolio() {
     },
     {
       label: 'Contact',
-      icon: 'icons/wiiu/tv.png',
+      icon: 'icons/wiiu/globe.png',
       content: <div>Contact Content tempo</div>,
       sizeClass: 'w-2/8 h-2/8',
     },

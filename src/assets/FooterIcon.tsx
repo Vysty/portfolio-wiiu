@@ -34,7 +34,7 @@ export default function FooterIcon({
     >
       <Bubble pos={'top'} label={label} />
 
-      <img src={icon} alt={'Image de ' + label} className="w-full h-full object-cover overflow-hidden " />
+      <img src={icon} alt={'Image de ' + label} className="w-full h-full object-contain overflow-hidden " />
     </motion.div>
   )
 }

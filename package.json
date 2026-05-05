@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "hdev": "vite --host",
+    "dhost": "vite --host",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc -b",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -31,6 +34,6 @@
     "globals": "^15.15.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.0"
+    "vite": "8.0.5"
   }
 }

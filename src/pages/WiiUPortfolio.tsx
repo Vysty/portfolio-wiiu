@@ -1,145 +1,297 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import AppTile from '../assets/AppTile.tsx'
 import EmptyTile from '../assets/EmptyTile.tsx'
 import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
 import ProfileTile from '../assets/ProfileTile.tsx'
+import FooterIcon from '../assets/FooterIcon.tsx'
 
+// Constante pour définir le nombre de tuiles par page (grille 5x3)
+const ITEMS_PER_PAGE = 15
+
+// --- Splash Screen ---
+function SplashScreen({ isLoading }: { isLoading: boolean }) {
+  return (
+    <AnimatePresence>
+      {isLoading && (
+        <motion.div
+          key="splash-screen"
+          initial={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl"
+        >
+          <div className="flex flex-col items-center">
+            <img
+              src={'/Photo.jpg'}
+              alt={'Image de profile'}
+              className="w-52 h-52 object-cover rounded-3xl border-12 border-tileselected bg-tileselected overflow-hidden"
+            />
+            <h1 className="text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
+              Thomas MARIE--DUVAL
+            </h1>
+            <div className="mt-8 flex space-x-2">
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0 }}
+                className="w-5 h-5 bg-cyan-400 rounded-full"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
+                className="w-5 h-5 bg-cyan-400 rounded-full"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
+                className="w-5 h-5 bg-cyan-400 rounded-full"
+              />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// --- Modal ---
+function DynamicOverlay({ activeContent, onClose }: { activeContent: React.ReactNode | null; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {activeContent && (
+        <motion.div
+          key="overlay"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
+          onClick={onClose}
+        >
+          <div
+            className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-4/5 h-4/5 mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="flex items-center justify-center absolute top-4 right-4  p-2 text-white rounded-4xl bg-transparent hover:bg-red-500/60 transition duration-400"
+              onClick={onClose}
+            >
+              <img
+                src={'/icons/wiiu/cross.png'}
+                alt={'Fermer'}
+                className="w-full h-full object-cover overflow-hidden"
+              />
+            </button>
+            {activeContent}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// --- Fonction principale ---
 export default function WiiUPortfolio() {
-    const [activeContent, setActiveContent] = useState<React.ReactNode | null>(
-        null,
-    )
+  const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
 
-    const handleOpen = (content: React.ReactNode) => {
-        setActiveContent(content)
-    }
+  // Gestion de la page actuelle
+  const [currentPage, setCurrentPage] = useState(0)
 
-    const apps = [
-        // Liste des applications affiché
-        {
-            label: 'Mon CV',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Contenu d'un projet</div>,
-        },
-        {
-            label: 'Projets',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Contenu des projets</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-        {
-            label: 'Contact',
-            icon: '/PlaceHolderImage.jpg',
-            content: <div>Formulaire de contact</div>,
-        },
-    ]
+  const [isLoading, setIsLoading] = useState(true)
 
-    return (
-        <div className={'flex h-screen w-screen'}>
-            {/*Left side*/}
-            <div
-                className={
-                    'w-42 h-screen flex flex-col items-center justify-start p-4'
-                }
+  // Minuteur pour le chargement de la page
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 0) // 2000 millisecondes = 2 secondes //TODO : rechanger pour 2000 après
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  const handleOpen = (content: React.ReactNode) => {
+    setActiveContent(content)
+  }
+
+  interface App {
+    position: number
+    label: string
+    icon: string
+    content: React.ReactNode
+  }
+
+  interface FooterIcon {
+    label: string
+    icon: string
+    content: React.ReactNode
+  }
+
+  // --- LISTE DES APPLICATIONS ---
+  const APPS: App[] = [
+    {
+      position: 2,
+      label: 'Mon CV',
+      icon: '/PlaceHolderImage.jpg',
+      content: <div>Contenu d'un projet</div>,
+    },
+    {
+      position: 12,
+      label: 'Projets',
+      icon: '/PlaceHolderImage.jpg',
+      content: <div>Contenu des projets</div>,
+    },
+    {
+      position: 16,
+      label: 'Contact',
+      icon: '/PlaceHolderImage.jpg',
+      content: <div>Formulaire de contact</div>,
+    },
+  ]
+
+  const footerApps: FooterIcon[] = [
+    {
+      label: 'A propos',
+      icon: '/icons/wiiu/bubble.png',
+      content: <div>Contenu de la section A propos</div>,
+    },
+    {
+      label: 'TODO',
+      icon: '/icons/wiiu/tv.png',
+      content: <div>Contenu de la section TODO</div>,
+    },
+  ]
+
+  // --- LOGIQUE DE PAGINATION ET DE GRILLE ---
+  const highestPosition = APPS.length > 0 ? Math.max(...APPS.map((app) => app.position)) : 0
+  const totalPages = Math.max(1, Math.ceil((highestPosition + 1) / ITEMS_PER_PAGE))
+
+  const gridSlots = Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => {
+    const absolutePosition = currentPage * ITEMS_PER_PAGE + index
+    return APPS.find((app) => app.position === absolutePosition) || null
+  })
+
+  return (
+    <div className={'flex h-screen w-screen overflow-hidden bg-background'}>
+      <SplashScreen isLoading={isLoading} />
+
+      {/* ---- Affichage de la page ---- */}
+      <AnimatePresence>
+        {/*Left side*/}
+        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+          <ProfileTile />
+
+          {/* Flèche Gauche */}
+          {currentPage > 0 && (
+            <button
+              onClick={() => setCurrentPage((curr) => curr - 1)}
+              className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              aria-label="Page précédente"
             >
-                {/*<p>Profile Picture placement</p>*/}
-                <ProfileTile />
-            </div>
-            {/*Center*/}
-            <div className={'grow h-screen flex flex-col'}>
-                {/*Center Header*/}
-                <header className="h-36 flex justify-center p-4 bg-red-400 ">
-                    <p className={'text-center'}>
-                        ....................................
-                    </p>
-                </header>
-                {/* Grille d'apps */}
-                <main
-                    className="grow grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
-                    style={{ width: '100%', height: '100%' }}
-                >
-                    {apps
-                        .map((app) => (
-                            <AppTile
-                                key={app.label}
-                                label={app.label}
-                                icon={app.icon}
-                                content={app.content}
-                                onOpen={handleOpen}
-                            />
-                        ))
-                        .concat(
-                            Array.from({ length: 15 - apps.length }, (_, i) => (
-                                <EmptyTile key={`empty-${i}`} />
-                            )),
-                        )}
-                </main>
-                {/*Center Footer*/}
-                <footer className="h-36 p-2 bg-gray-800">© 2025</footer>
-            </div>{' '}
-            {/*Right side*/}
-            <div
-                className={
-                    'w-42 h-screen flex flex-col items-center justify-start p-4'
-                }
-            >
-                <ThemeToggleButton />
-            </div>
-            {/* Overlay dynamique (quand tu cliques sur une case*/}
-            <AnimatePresence>
-                {activeContent && (
-                    <motion.div
-                        key="overlay"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
-                        onClick={() => setActiveContent(null)}
-                    >
-                        <div
-                            className="bg-white text-black rounded-lg p-8 shadow-lg"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {activeContent}
-                            <button
-                                className="mt-6 px-4 py-2 bg-gray-800 text-white rounded"
-                                onClick={() => setActiveContent(null)}
-                            >
-                                Fermer
-                            </button>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+          )}
         </div>
-    )
+
+        {/*Center*/}
+        <div className={'grow h-screen flex flex-col relative'}>
+          {/*Center Header - Indicateurs de pages*/}
+          <header className="h-20 flex flex-col items-center justify-end pb-4 z-0">
+            <div className="flex space-x-4 items-center">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  aria-label={`Aller à la page ${index + 1}`}
+                  className={`w-5 h-5 rounded-md transition-all duration-300 cursor-pointer shadow-sm
+                  ${
+                    currentPage === index
+                      ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }
+                `}
+                />
+              ))}
+            </div>
+          </header>
+
+          {/* --- ZONE PRINCIPALE : Grille --- */}
+          <div className="grow relative overflow-hidden flex items-center justify-center">
+            {/* Grille animée */}
+            <AnimatePresence mode="wait">
+              <motion.main
+                key={currentPage}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
+              >
+                {gridSlots.map((app, index) => {
+                  if (app) {
+                    return (
+                      <AppTile
+                        key={app.label}
+                        label={app.label}
+                        icon={app.icon}
+                        content={app.content}
+                        onOpen={handleOpen}
+                        bubblePos={index < 5 ? 'bottom' : 'top'}
+                      />
+                    )
+                  } else {
+                    return <EmptyTile key={`empty-${currentPage}-${index}`} />
+                  }
+                })}
+              </motion.main>
+            </AnimatePresence>
+          </div>
+
+          {/*Center Footer*/}
+          <footer className="h-36 flex items-center justify-center gap-10 p-2 pb-4">
+            {footerApps.map((app) => (
+              <FooterIcon label={app.label} icon={app.icon} content={app.content} onOpen={handleOpen} />
+            ))}
+          </footer>
+        </div>
+
+        {/*Right side*/}
+        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+          <ThemeToggleButton />
+          {/* Flèche Droite */}
+          {currentPage < totalPages - 1 && (
+            <button
+              onClick={() => setCurrentPage((curr) => curr + 1)}
+              className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-4 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
+              aria-label="Page suivante"
+            >
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          )}
+        </div>
+      </AnimatePresence>
+
+      {/* Overlay dynamique */}
+      <DynamicOverlay activeContent={activeContent} onClose={() => setActiveContent(null)} />
+    </div>
+  )
 }

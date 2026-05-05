@@ -28,14 +28,6 @@ export default function AppTile({ label, icon, content, onOpen, bubblePos }: App
         alt={'Image de ' + label}
         className="w-full h-full object-cover rounded-lg overflow-hidden " // rounded-md ajouté pour adoucir l'image
       />
-
-      {/* Optionnel : sur Wii U, le texte est souvent DANS la bulle et pas sous l'icône.
-                Vous pouvez commenter cette ligne si vous voulez le style puriste. */}
-      {/*
-            <span className="text-sm font-medium text-white shadow-black drop-shadow-md">
-                {label}
-            </span>
-            */}
     </motion.div>
   )
 }

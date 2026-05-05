@@ -4,6 +4,7 @@ import AppTile from '../assets/AppTile.tsx'
 import EmptyTile from '../assets/EmptyTile.tsx'
 import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
 import ProfileTile from '../assets/ProfileTile.tsx'
+import FooterIcon from '../assets/FooterIcon.tsx'
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -70,13 +71,17 @@ function DynamicOverlay({ activeContent, onClose }: { activeContent: React.React
             className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-full mx-4"
             onClick={(e) => e.stopPropagation()}
           >
-            {activeContent}
             <button
-              className="mt-6 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors"
+              className="flex items-center justify-center absolute top-4 right-4  p-2 text-white rounded-4xl bg-transparent hover:bg-red-500/60 transition duration-400"
               onClick={onClose}
             >
-              Fermer
+              <img
+                src={'/icons/wiiu/cross.png'}
+                alt={'Fermer'}
+                className="w-full h-full object-cover overflow-hidden"
+              />
             </button>
+            {activeContent}
           </div>
         </motion.div>
       )}
@@ -97,7 +102,7 @@ export default function WiiUPortfolio() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000) // 2000 millisecondes = 2 secondes
+    }, 0) // 2000 millisecondes = 2 secondes //TODO : rechanger pour 2000 après
 
     return () => clearTimeout(timer)
   }, [])
@@ -232,8 +237,13 @@ export default function WiiUPortfolio() {
           </div>
 
           {/*Center Footer*/}
-          <footer className="h-36 flex items-center justify-center p-2 bg-gray-800 text-white">
-            <p>© 2026</p>
+          <footer className="h-36 flex items-center justify-center p-2">
+            <FooterIcon
+              label={'A propos'}
+              icon={'icons/wiiu/bubble.png'}
+              content={<div>tempo</div>}
+              onOpen={handleOpen}
+            />
           </footer>
         </div>
 

@@ -68,7 +68,7 @@ function DynamicOverlay({ activeContent, onClose }: { activeContent: React.React
           onClick={onClose}
         >
           <div
-            className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-full mx-4"
+            className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-4/5 h-4/5 mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -118,6 +118,12 @@ export default function WiiUPortfolio() {
     content: React.ReactNode
   }
 
+  interface FooterIcon {
+    label: string
+    icon: string
+    content: React.ReactNode
+  }
+
   // --- LISTE DES APPLICATIONS ---
   const APPS: App[] = [
     {
@@ -137,6 +143,19 @@ export default function WiiUPortfolio() {
       label: 'Contact',
       icon: '/PlaceHolderImage.jpg',
       content: <div>Formulaire de contact</div>,
+    },
+  ]
+
+  const footerApps: FooterIcon[] = [
+    {
+      label: 'A propos',
+      icon: '/icons/wiiu/bubble.png',
+      content: <div>Contenu de la section A propos</div>,
+    },
+    {
+      label: 'TODO',
+      icon: '/icons/wiiu/tv.png',
+      content: <div>Contenu de la section TODO</div>,
     },
   ]
 
@@ -237,13 +256,10 @@ export default function WiiUPortfolio() {
           </div>
 
           {/*Center Footer*/}
-          <footer className="h-36 flex items-center justify-center p-2">
-            <FooterIcon
-              label={'A propos'}
-              icon={'icons/wiiu/bubble.png'}
-              content={<div>tempo</div>}
-              onOpen={handleOpen}
-            />
+          <footer className="h-36 flex items-center justify-center gap-10 p-2 pb-4">
+            {footerApps.map((app) => (
+              <FooterIcon label={app.label} icon={app.icon} content={app.content} onOpen={handleOpen} />
+            ))}
           </footer>
         </div>
 

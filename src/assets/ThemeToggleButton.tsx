@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { tileVariants } from '../styles/FramerConsts.ts'
 
 const SunIcon = () => (
@@ -41,34 +40,13 @@ const MoonIcon = () => (
     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
   </svg>
 )
-// ----------------------------------------
 
-export default function ThemeToggleButton() {
-  const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
+interface ThemeToggleButtonProps {
+  theme: 'light' | 'dark' | null
+  setTheme: (theme: 'light' | 'dark') => void
+}
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      setTheme(storedTheme)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!theme) return
-    const root = document.documentElement
-
-    if (theme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
+export default function ThemeToggleButton({ theme, setTheme }: ThemeToggleButtonProps) {
   if (!theme) return null
 
   return (

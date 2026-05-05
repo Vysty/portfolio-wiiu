@@ -5,6 +5,7 @@ import EmptyTile from '../assets/EmptyTile.tsx'
 import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
 import ProfileTile from '../assets/ProfileTile.tsx'
 import FooterIcon from '../assets/FooterIcon.tsx'
+import AboutMe from './footerIconContents/AboutMe.tsx'
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -55,7 +56,15 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
 }
 
 // --- Modal ---
-function DynamicOverlay({ activeContent, onClose }: { activeContent: React.ReactNode | null; onClose: () => void }) {
+function DynamicOverlay({
+  activeContent,
+  onClose,
+  sizeClass = 'w-5/6 h-5/6',
+}: {
+  activeContent: React.ReactNode | null
+  onClose: () => void
+  sizeClass?: string
+}) {
   return (
     <AnimatePresence>
       {activeContent && (
@@ -65,14 +74,13 @@ function DynamicOverlay({ activeContent, onClose }: { activeContent: React.React
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
-          onClick={onClose}
         >
           <div
-            className="bg-white text-black rounded-lg p-8 shadow-lg max-w-2xl w-4/5 h-4/5 mx-4"
+            className={`bg-white text-black rounded-lg p-8 shadow-lg ${sizeClass}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="flex items-center justify-center absolute top-4 right-4  p-2 text-white rounded-4xl bg-transparent hover:bg-red-500/60 transition duration-400"
+              className="flex items-center justify-center absolute top-4 right-4 p-2 text-white rounded-2xl bg-transparent hover:bg-red-500/60 transition duration-400 cursor-pointer"
               onClick={onClose}
             >
               <img
@@ -92,11 +100,15 @@ function DynamicOverlay({ activeContent, onClose }: { activeContent: React.React
 // --- Fonction principale ---
 export default function WiiUPortfolio() {
   const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
+  const [modalSizeClass, setModalSizeClass] = useState<string>('w-5/6 h-5/6')
 
   // Gestion de la page actuelle
   const [currentPage, setCurrentPage] = useState(0)
 
   const [isLoading, setIsLoading] = useState(true)
+
+  // Gestion du thème
+  const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
 
   // Minuteur pour le chargement de la page
   useEffect(() => {
@@ -107,8 +119,38 @@ export default function WiiUPortfolio() {
     return () => clearTimeout(timer)
   }, [])
 
-  const handleOpen = (content: React.ReactNode) => {
+  // Initialisation du thème au chargement
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      setTheme(storedTheme)
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      setTheme(prefersDark ? 'dark' : 'light')
+    }
+  }, [])
+
+  // Appliquer le thème au DOM et sauvegarder en localStorage
+  useEffect(() => {
+    if (!theme) return
+    const root = document.documentElement
+
+    if (theme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const handleOpen = (content: React.ReactNode, sizeClass: string | null = null) => {
     setActiveContent(content)
+    if (sizeClass == null) {
+      setModalSizeClass('w-5/6 h-5/6')
+    } else {
+      setModalSizeClass(sizeClass)
+    }
   }
 
   interface App {
@@ -121,7 +163,9 @@ export default function WiiUPortfolio() {
   interface FooterIcon {
     label: string
     icon: string
-    content: React.ReactNode
+    content?: React.ReactNode
+    redirect?: string
+    sizeClass?: string | null
   }
 
   // --- LISTE DES APPLICATIONS ---
@@ -148,14 +192,25 @@ export default function WiiUPortfolio() {
 
   const footerApps: FooterIcon[] = [
     {
-      label: 'A propos',
+      label: 'À propos de moi',
       icon: '/icons/wiiu/bubble.png',
-      content: <div>Contenu de la section A propos</div>,
+      content: <AboutMe />,
     },
     {
-      label: 'TODO',
-      icon: '/icons/wiiu/tv.png',
-      content: <div>Contenu de la section TODO</div>,
+      label: 'Linkedln',
+      icon: '/icons/linkedln.png',
+      redirect: 'https://linkedin.com/in/thomas-marie-duval',
+    },
+    {
+      label: 'Github',
+      icon: theme === 'dark' ? '/icons/github.png' : 'icons/github_dark.png',
+      redirect: 'https://github.com/Vysty',
+    },
+    {
+      label: 'Contact',
+      icon: 'icons/wiiu/tv.png',
+      content: <div>Contact Content tempo</div>,
+      sizeClass: 'w-2/8 h-2/8',
     },
   ]
 
@@ -243,7 +298,9 @@ export default function WiiUPortfolio() {
                         label={app.label}
                         icon={app.icon}
                         content={app.content}
-                        onOpen={handleOpen}
+                        onOpen={() => {
+                          handleOpen(app.content)
+                        }}
                         bubblePos={index < 5 ? 'bottom' : 'top'}
                       />
                     )
@@ -258,14 +315,22 @@ export default function WiiUPortfolio() {
           {/*Center Footer*/}
           <footer className="h-36 flex items-center justify-center gap-10 p-2 pb-4">
             {footerApps.map((app) => (
-              <FooterIcon label={app.label} icon={app.icon} content={app.content} onOpen={handleOpen} />
+              <FooterIcon
+                label={app.label}
+                icon={app.icon}
+                content={app.content}
+                redirect={app.redirect}
+                onOpen={() => {
+                  handleOpen(app.content, app.sizeClass)
+                }}
+              />
             ))}
           </footer>
         </div>
 
         {/*Right side*/}
         <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
-          <ThemeToggleButton />
+          <ThemeToggleButton theme={theme} setTheme={setTheme} />
           {/* Flèche Droite */}
           {currentPage < totalPages - 1 && (
             <button
@@ -291,7 +356,7 @@ export default function WiiUPortfolio() {
       </AnimatePresence>
 
       {/* Overlay dynamique */}
-      <DynamicOverlay activeContent={activeContent} onClose={() => setActiveContent(null)} />
+      <DynamicOverlay activeContent={activeContent} onClose={() => setActiveContent(null)} sizeClass={modalSizeClass} />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
 import ProfileTile from '../assets/ProfileTile.tsx'
 import FooterIcon from '../assets/FooterIcon.tsx'
 import AboutMe from './footerIconContents/AboutMe.tsx'
+import Contact from "./footerIconContents/Contact.tsx";
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -20,7 +21,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
           initial={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl"
+          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl transition-colors duration-500"
         >
           <div className="flex flex-col items-center">
             <img
@@ -76,7 +77,7 @@ function DynamicOverlay({
           className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
         >
           <div
-            className={`bg-white text-black rounded-lg p-8 shadow-lg ${sizeClass}`}
+            className={`bg-background text-foreground rounded-lg p-8 shadow-lg ${sizeClass}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -209,8 +210,8 @@ export default function WiiUPortfolio() {
     {
       label: 'Contact',
       icon: 'icons/wiiu/globe.png',
-      content: <div>Contact Content tempo</div>,
-      sizeClass: 'w-2/8 h-2/8',
+      content: <Contact />,
+      sizeClass: 'w-2/8 h-fit',
     },
   ]
 
@@ -247,7 +248,7 @@ export default function WiiUPortfolio() {
   })
 
   return (
-    <div className={'flex h-screen w-screen overflow-hidden bg-background'}>
+    <div className={'flex h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Affichage de la page ---- */}
@@ -289,7 +290,7 @@ export default function WiiUPortfolio() {
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-5 h-5 rounded-md transition-all duration-300 cursor-pointer shadow-sm
+                  className={`w-5 h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'

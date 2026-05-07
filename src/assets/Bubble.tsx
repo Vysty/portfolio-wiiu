@@ -22,10 +22,10 @@ export default function Bubble({ pos, label }: { pos: 'top' | 'bottom'; label: s
       variants={bubbleVariants}
       className={`absolute ${bubblePositionClass} w-max max-w-45 pointer-events-none`}
     >
-      <div className="bg-tilescolor text-foreground px-4 py-2 rounded-2xl shadow-xl flex flex-col items-center">
+      <div className="bg-tilescolor text-foreground px-4 py-2 rounded-2xl shadow-xl flex flex-col items-center transition-colors duration-500">
         <span className="text-lg font-sans font-semibold whitespace-nowrap">{label}</span>
         {/* Le petit triangle (flèche) dynamique */}
-        <div className={`absolute w-4 h-4 bg-tilescolor rotate-45 transform ${arrowPositionClass}`}></div>
+        <div className={`absolute w-4 h-4 bg-tilescolor rotate-45 transform ${arrowPositionClass} transition-colors duration-500`}></div>
       </div>
     </motion.div>
   )

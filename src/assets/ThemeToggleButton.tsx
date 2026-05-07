@@ -56,7 +56,7 @@ export default function ThemeToggleButton({ theme, setTheme }: ThemeToggleButton
       variants={tileVariants}
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       aria-label={theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre'}
-      className="p-4 rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-300 text-foreground bg-background hover:bg-foreground hover:text-background  border-12 border-tilescolor/80 hover:border-tileselected"
+      className="p-4 rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-500 text-foreground bg-background hover:bg-foreground hover:text-background  border-12 border-tilescolor/80 hover:border-tileselected"
     >
       {/* Si on est en Dark, on montre le soleil pour passer en Light. Sinon, la lune. */}
       {theme === 'dark' ? <SunIcon /> : <MoonIcon />}

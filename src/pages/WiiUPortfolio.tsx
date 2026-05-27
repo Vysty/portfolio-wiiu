@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import AppTile from '../assets/AppTile.tsx'
-import EmptyTile from '../assets/EmptyTile.tsx'
-import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
-import ProfileTile from '../assets/ProfileTile.tsx'
-import FooterIcon from '../assets/FooterIcon.tsx'
+import AppTile from '../components/AppTile.tsx'
+import EmptyTile from '../components/EmptyTile.tsx'
+import ThemeToggleButton from '../components/ThemeToggleButton.tsx'
+import ProfileTile from '../components/ProfileTile.tsx'
+import FooterIcon from '../components/FooterIcon.tsx'
 import AboutMe from './footerIconContents/AboutMe.tsx'
 import Contact from "./footerIconContents/Contact.tsx";
 

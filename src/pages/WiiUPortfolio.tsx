@@ -7,6 +7,7 @@ import ProfileTile from '../components/ProfileTile.tsx'
 import FooterIcon from '../components/FooterIcon.tsx'
 import AboutMe from './footerIconContents/AboutMe.tsx'
 import Contact from "./footerIconContents/Contact.tsx";
+import RustGarden from "./modalsContents/RustGarden.tsx";
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -173,14 +174,14 @@ export default function WiiUPortfolio() {
   const APPS: App[] = [
     {
       position: 2,
-      label: 'Mon CV',
-      icon: '/PlaceHolderImage.jpg',
-      content: <div>Contenu d'un projet</div>,
+      label: 'Projet RustGarden',
+      icon: '/icons/modalIcon/RustGarden.png',
+      content: <RustGarden />,
     },
     {
       position: 12,
-      label: 'Projets',
-      icon: '/PlaceHolderImage.jpg',
+      label: 'Logiciel industriel d\'assistance à la  préparation en entrepôt',
+      icon: '/icons/modalIcon/Palette.png',
       content: <div>Contenu des projets</div>,
     },
     {

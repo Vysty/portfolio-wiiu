@@ -1,30 +1,79 @@
+import Badge from "../../components/Badge.tsx";
+
 export default function RustGarden() {
   return (
     <div className={"flex flex-col h-full"}>
-      <h2 className="text-4xl font-bold mb-4">Rust Garden</h2>
+      <div className="flex flex-col overflow-y-auto h-full w-full p-4 space-y-4 gap-5">
+        <div className="flex w-full gap-10">
+          <div className={"flex flex-col gap-4 text-justify text-xl"}>
+            <h2 className="text-4xl font-bold">Rust Garden</h2>
+            <p>RustGarden est un système IoT complet dédié à la surveillance environnementale et à l'automatisation de
+              l'entretien des plantes.</p>
 
-      <div className="overflow-y-auto h-full p-4 space-y-4">
-        <p>RustGarden est un système IoT complet dédié à la surveillance environnementale et à l'automatisation de
-          l'entretien des plantes.</p>
+            <p>Ce projet illustre la conception d'une architecture logicielle distribuée et robuste, allant de la
+              capture
+              de
+              données par des capteurs connectés à un Arduino, jusqu'à leur restitution via une interface utilisateur,
+              avec
+              l'écosystème Rust au cœur de la stack.</p>
 
-        <p>Ce projet illustre la conception d'une architecture logicielle distribuée et robuste, allant de la capture de
-          données par des capteurs connectés à un Arduino, jusqu'à leur restitution via une interface utilisateur, avec
-          l'écosystème Rust au cœur de la stack.</p>
+            <p>Cette interface permet également l'automatisation de commandes telles que l'entretien du jardin
+              manuellement
+              ou bien automatisé en fonction des besoins de la plante.</p>
 
-        <p>Cette interface permet également l'automatisation de commandes telles que l'entretien du jardin manuellement
-          ou bien automatisé en fonction des besoins de la plante.</p>
+            <p>L'application s'appuie sur les données de Trefle.io pour connaître les conditions idéales de la
+              plante.</p>
 
-        <p>L'application s'appuie sur les données de Trefle.io pour connaître les conditions idéales de la plante.</p>
 
-        <img src="/modalImage/rustGarden.png" alt="RustGarden" className="w-3/4 h-auto rounded-lg shadow-md mx-auto" />
+          </div>
+          <div className={"grow flex items-start justify-center overflow-hidden"}>
+            <img
+              src="/modalImage/rustGarden.png"
+              alt="RustGarden"
+              className="h-auto rounded-lg"
+            />
+          </div>
+        </div>
 
-        <h3 className={"text-xl font-bold"}>Stack Technique :</h3>
-        <ul className="list-disc list-inside space-y-2">
-          <li>Frontend : Dioxus (Rust), requêtes REST API</li>
-          <li>Backend : Rust, API REST, intégration API externe (Trefle.io)</li>
-          <li>IoT et Pont (arduino-com) : Arduino, Rust, Port Série, Protocole MQTT</li>
-          <li>Base de données : PostgreSQL</li>
-        </ul>
+        <div className={"flex flex-col gap-8"}>
+          <h3 className={"text-2xl font-bold"}>Stack Technique :</h3>
+          <div className={"flex justify-between items-center"}>
+            <Badge title={"FrontEnd"} content={"Dioxus (Rust), requêtes REST API"}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                <path fill-rule="evenodd"
+                      d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 0 0-3.471 2.987 10.04 10.04 0 0 1 4.815 4.815 18.748 18.748 0 0 0 2.987-3.472l3.386-5.079A1.902 1.902 0 0 0 20.599 1.5Zm-8.3 14.025a18.76 18.76 0 0 0 1.896-1.207 8.026 8.026 0 0 0-4.513-4.513A18.75 18.75 0 0 0 8.475 11.7l-.278.5a5.26 5.26 0 0 1 3.601 3.602l.502-.278ZM6.75 13.5A3.75 3.75 0 0 0 3 17.25a1.5 1.5 0 0 1-1.601 1.497.75.75 0 0 0-.7 1.123 5.25 5.25 0 0 0 9.8-2.62 3.75 3.75 0 0 0-3.75-3.75Z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </Badge>
+            <Badge title={"Backend"} content={"Rust, API REST, intégration API externe (Trefle.io)"}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                <path
+                  d="M5.507 4.048A3 3 0 0 1 7.785 3h8.43a3 3 0 0 1 2.278 1.048l1.722 2.008A4.533 4.533 0 0 0 19.5 6h-15c-.243 0-.482.02-.715.056l1.722-2.008Z"/>
+                <path fill-rule="evenodd"
+                      d="M1.5 10.5a3 3 0 0 1 3-3h15a3 3 0 1 1 0 6h-15a3 3 0 0 1-3-3Zm15 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm2.25.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM4.5 15a3 3 0 1 0 0 6h15a3 3 0 1 0 0-6h-15Zm11.25 3.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM19.5 18a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </Badge>
+            <Badge title={"Iot et Pont (arduino.com)"} content={"Arduino, Rust, Port Série, Protocole MQTT"}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                <path
+                  d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z"/>
+              </svg>
+            </Badge>
+            <Badge title={"Base de données"} content={"PostgreSQL"}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z"/>
+                <path
+                  d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 0 0 1.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 0 0 1.897 1.384C6.809 12.164 9.315 12.75 12 12.75Z"/>
+                <path
+                  d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 15.914 9.315 16.5 12 16.5Z"/>
+                <path
+                  d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 19.664 9.315 20.25 12 20.25Z"/>
+              </svg>
+
+            </Badge>
+          </div>
+        </div>
 
       </div>
     </div>

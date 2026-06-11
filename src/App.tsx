@@ -8,10 +8,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path={'/'} element={<CommingSoonPage />} /> {/*Redirection temporaire*/}
+        <Route path={'/'} element={<WiiUPortfolio />} />
         <Route path={'/comingsoon'} element={<CommingSoonPage />} />
         <Route path={'/coming-soon'} element={<CommingSoonPage />} />
-        <Route path={'/secret'} element={<WiiUPortfolio />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} /> {/* ← catch-all */}
       </Routes>

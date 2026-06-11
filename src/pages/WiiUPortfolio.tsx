@@ -6,9 +6,9 @@ import ThemeToggleButton from '../components/ThemeToggleButton.tsx'
 import ProfileTile from '../components/ProfileTile.tsx'
 import FooterIcon from '../components/FooterIcon.tsx'
 import AboutMe from './footerIconContents/AboutMe.tsx'
-import Contact from "./footerIconContents/Contact.tsx";
-import RustGarden from "./modalsContents/RustGarden.tsx";
-import Palette from "./modalsContents/Palette.tsx";
+import Contact from './footerIconContents/Contact.tsx'
+import RustGarden from './modalsContents/RustGarden.tsx'
+import Palette from './modalsContents/Palette.tsx'
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -181,7 +181,7 @@ export default function WiiUPortfolio() {
     },
     {
       position: 13,
-      label: 'Logiciel industriel d\'assistance à la  préparation en entrepôt',
+      label: "Logiciel industriel d'assistance à la  préparation en entrepôt",
       icon: '/icons/modalIcon/Palette.png',
       content: <Palette />,
     },

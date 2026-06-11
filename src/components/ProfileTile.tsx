@@ -12,7 +12,7 @@ export default function ProfileTile() {
       href={'/ThomasMarieDuval_CV.pdf'}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-32 h-32 rounded-lg flex flex-col items-center justify-center text-center shadow-lg bg-tilescolor/80 cursor-pointer"
+      className="w-32 h-32 rounded-lg flex flex-col items-center justify-center text-center shadow-lg bg-tilescolor/80 cursor-pointer transition-colors duration-500"
     >
       <img
         src={'/Photo.jpg'}

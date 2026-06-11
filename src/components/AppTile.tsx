@@ -19,7 +19,7 @@ export default function AppTile({ label, icon, content, onOpen, bubblePos }: App
       variants={tileVariants}
       onClick={() => onOpen(content)}
       // relative pour ne pas couper la bulle de texte
-      className={`relative w-44 h-44 rounded-lg flex flex-col items-center justify-center cursor-pointer shadow-md border-12 border-tilescolor/80 bg-tilescolor/80 hover:border-tileselected hover:bg-tileselected`}
+      className={`relative w-44 h-44 rounded-lg flex flex-col items-center justify-center cursor-pointer shadow-md border-12 border-tilescolor/80 bg-tilescolor/80 hover:border-tileselected hover:bg-tileselected transition-colors duration-500`}
     >
       <Bubble pos={bubblePos} label={label} />
 

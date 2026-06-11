@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import AppTile from '../assets/AppTile.tsx'
-import EmptyTile from '../assets/EmptyTile.tsx'
-import ThemeToggleButton from '../assets/ThemeToggleButton.tsx'
-import ProfileTile from '../assets/ProfileTile.tsx'
-import FooterIcon from '../assets/FooterIcon.tsx'
+import AppTile from '../components/AppTile.tsx'
+import EmptyTile from '../components/EmptyTile.tsx'
+import ThemeToggleButton from '../components/ThemeToggleButton.tsx'
+import ProfileTile from '../components/ProfileTile.tsx'
+import FooterIcon from '../components/FooterIcon.tsx'
 import AboutMe from './footerIconContents/AboutMe.tsx'
+import Contact from './footerIconContents/Contact.tsx'
+import RustGarden from './modalsContents/RustGarden.tsx'
+import Palette from './modalsContents/Palette.tsx'
 
 // Constante pour définir le nombre de tuiles par page (grille 5x3)
 const ITEMS_PER_PAGE = 15
@@ -20,7 +23,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
           initial={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl"
+          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl transition-colors duration-500"
         >
           <div className="flex flex-col items-center">
             <img
@@ -76,7 +79,7 @@ function DynamicOverlay({
           className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
         >
           <div
-            className={`bg-white text-black rounded-lg p-8 shadow-lg ${sizeClass}`}
+            className={`bg-background text-foreground rounded-lg p-8 shadow-lg ${sizeClass}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -108,7 +111,14 @@ export default function WiiUPortfolio() {
   const [isLoading, setIsLoading] = useState(true)
 
   // Gestion du thème
-  const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme
+    }
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    return prefersDark ? 'dark' : 'light'
+  })
 
   // Minuteur pour le chargement de la page
   useEffect(() => {
@@ -117,17 +127,6 @@ export default function WiiUPortfolio() {
     }, 1500) // 2000 millisecondes = 2 secondes
 
     return () => clearTimeout(timer)
-  }, [])
-
-  // Initialisation du thème au chargement
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      setTheme(storedTheme)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-    }
   }, [])
 
   // Appliquer le thème au DOM et sauvegarder en localStorage
@@ -171,22 +170,22 @@ export default function WiiUPortfolio() {
   // --- LISTE DES APPLICATIONS ---
   const APPS: App[] = [
     {
-      position: 2,
-      label: 'Mon CV',
-      icon: '/PlaceHolderImage.jpg',
-      content: <div>Contenu d'un projet</div>,
+      position: 1,
+      label: 'Projet RustGarden',
+      icon: '/icons/modalIcon/RustGarden.png',
+      content: <RustGarden />,
     },
     {
-      position: 12,
-      label: 'Projets',
-      icon: '/PlaceHolderImage.jpg',
-      content: <div>Contenu des projets</div>,
+      position: 13,
+      label: "Logiciel industriel d'assistance à la  préparation en entrepôt",
+      icon: '/icons/modalIcon/Palette.png',
+      content: <Palette />,
     },
     {
-      position: 16,
-      label: 'Contact',
+      position: 19,
+      label: 'Placeholder',
       icon: '/PlaceHolderImage.jpg',
-      content: <div>Formulaire de contact</div>,
+      content: <div>Placeholder</div>,
     },
   ]
 
@@ -209,8 +208,8 @@ export default function WiiUPortfolio() {
     {
       label: 'Contact',
       icon: 'icons/wiiu/globe.png',
-      content: <div>Contact Content tempo</div>,
-      sizeClass: 'w-2/8 h-2/8',
+      content: <Contact />,
+      sizeClass: 'w-2/8 h-fit',
     },
   ]
 
@@ -247,7 +246,7 @@ export default function WiiUPortfolio() {
   })
 
   return (
-    <div className={'flex h-screen w-screen overflow-hidden bg-background'}>
+    <div className={'flex h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Affichage de la page ---- */}
@@ -289,7 +288,7 @@ export default function WiiUPortfolio() {
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-5 h-5 rounded-md transition-all duration-300 cursor-pointer shadow-sm
+                  className={`w-5 h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'

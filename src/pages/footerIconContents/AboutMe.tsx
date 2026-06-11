@@ -121,6 +121,8 @@ export default function AboutMe() {
   )
 }
 
+// Composant spécifique pour les badges de cet stack technique
+// Contrairement aux badges standard, ceux-ci ont une forme rectangulaire qui s'étire
 function StackBadgeAbout({ title, content, children }: { title: string; content: string; children?: React.ReactNode }) {
   return (
     <motion.div

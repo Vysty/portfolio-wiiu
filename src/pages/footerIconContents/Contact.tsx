@@ -1,8 +1,10 @@
+// Composant affiché dans la modale lorsqu'on clique sur l'icône "Contact"
 export default function Contact() {
   return (
     <div className={'flex flex-col gap-3 md:gap-5'}>
       <h1 className={'text-2xl md:text-3xl font-bold'}>Contact</h1>
       <div className={'flex flex-col gap-2 md:gap-3'}>
+        {/* Section Email */}
         <div className={'flex flex-col gap-1'}>
           <div className={'flex gap-2 md:gap-3'}>
             <svg
@@ -29,6 +31,8 @@ export default function Contact() {
             </li>
           </ul>
         </div>
+        
+        {/* Section Téléphone */}
         <div className={'flex flex-col gap-1'}>
           <div className={'flex gap-2 md:gap-3'}>
             <svg

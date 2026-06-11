@@ -1,10 +1,13 @@
 import Badge from '../../components/Badge.tsx'
 import ZoomableImage from '../../components/ZoomableImage.tsx'
 
+// Contenu de la modale pour le projet "Palette" (logiciel industriel)
 export default function Palette() {
   return (
     <div className={'flex flex-col h-full'}>
       <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
+        
+        {/* Présentation principale : texte à gauche (ou dessous sur mobile), image à droite */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
           <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>
             <h2 className="text-2xl md:text-4xl font-bold">
@@ -32,6 +35,7 @@ export default function Palette() {
               plus stable pour le placement du prochain colis.
             </p>
           </div>
+
           <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
             <ZoomableImage
               src="/modalImage/PreparationInterface.png"
@@ -41,6 +45,7 @@ export default function Palette() {
           </div>
         </div>
 
+        {/* Détail des technologies utilisées */}
         <div className={'flex flex-col gap-6 md:gap-8'}>
           <h3 className={'text-xl md:text-2xl font-bold'}>Stack Technique :</h3>
           <div className={'grid grid-cols-1 md:flex md:justify-around items-start gap-4'}>
@@ -50,9 +55,9 @@ export default function Palette() {
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 0 0-3.471 2.987 10.04 10.04 0 0 1 4.815 4.815 18.748 18.748 0 0 0 2.987-3.472l3.386-5.079A1.902 1.902 0 0 0 20.599 1.5Zm-8.3 14.025a18.76 18.76 0 0 0 1.896-1.207 8.026 8.026 0 0 0-4.513-4.513A18.75 18.75 0 0 0 8.475 11.7l-.278.5a5.26 5.26 0 0 1 3.601 3.602l.502-.278ZM6.75 13.5A3.75 3.75 0 0 0 3 17.25a1.5 1.5 0 0 1-1.601 1.497.75.75 0 0 0-.7 1.123 5.25 5.25 0 0 0 9.8-2.62 3.75 3.75 0 0 0-3.75-3.75Z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </Badge>
@@ -60,9 +65,9 @@ export default function Palette() {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path d="M5.507 4.048A3 3 0 0 1 7.785 3h8.43a3 3 0 0 1 2.278 1.048l1.722 2.008A4.533 4.533 0 0 0 19.5 6h-15c-.243 0-.482.02-.715.056l1.722-2.008Z" />
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M1.5 10.5a3 3 0 0 1 3-3h15a3 3 0 1 1 0 6h-15a3 3 0 0 1-3-3Zm15 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm2.25.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM4.5 15a3 3 0 1 0 0 6h15a3 3 0 1 0 0-6h-15Zm11.25 3.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM19.5 18a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </Badge>

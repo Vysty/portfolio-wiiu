@@ -47,6 +47,7 @@ interface ThemeToggleButtonProps {
   isMobile?: boolean
 }
 
+// Bouton permettant de basculer entre le mode clair et sombre.
 export default function ThemeToggleButton({ theme, setTheme, isMobile = false }: ThemeToggleButtonProps) {
   if (!theme) return null
 
@@ -62,6 +63,7 @@ export default function ThemeToggleButton({ theme, setTheme, isMobile = false }:
       } rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-500 text-foreground bg-background hover:bg-foreground hover:text-background border-tilescolor/80 hover:border-tileselected`}
     >
       <div className={`${isMobile ? 'scale-90 md:scale-100' : 'scale-100 lg:scale-110'}`}>
+        {/* On affiche l'icône de l'action inverse : si on est en Dark, on montre le soleil pour repasser en Light */}
         {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
       </div>
     </motion.button>

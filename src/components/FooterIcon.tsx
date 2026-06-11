@@ -3,6 +3,8 @@ import Bubble from './Bubble.tsx'
 import { motion } from 'framer-motion'
 import React from 'react'
 
+// Représente une icône de raccourci dans la barre du bas (ex: LinkedIn, Contact)
+// Gère à la fois l'ouverture d'une modale interne ou la redirection vers un lien externe
 export default function FooterIcon({
   label,
   icon,
@@ -17,6 +19,7 @@ export default function FooterIcon({
   onOpen?: (content: React.ReactNode) => void
 }) {
   const handleClick = () => {
+    // Si on a un lien, on part. Sinon on ouvre la modale associée au composant.
     if (redirect) {
       window.open(redirect, '_blank')
     } else if (content) {

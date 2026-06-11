@@ -11,6 +11,7 @@ import RustGarden from './modalsContents/RustGarden.tsx'
 import Palette from './modalsContents/Palette.tsx'
 
 // --- Splash Screen ---
+// Affiché brièvement au chargement du site pour masquer le temps de rendu initial.
 function SplashScreen({ isLoading }: { isLoading: boolean }) {
   return (
     <AnimatePresence>
@@ -31,6 +32,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
             <h1 className="text-3xl md:text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
               Thomas MARIE--DUVAL
             </h1>
+            {/* Les 3 petits points de chargement qui clignotent */}
             <div className="mt-8 flex space-x-2">
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
@@ -56,6 +58,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
 }
 
 // --- Modal ---
+// C'est ce conteneur qui s'ouvre lorsqu'on clique sur une application de la grille ou du footer ou une tuile.
 function DynamicOverlay({
   activeContent,
   onClose,
@@ -74,11 +77,12 @@ function DynamicOverlay({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          // Ferme la modale si on clique à côté
           onClick={onClose}
         >
           <div
             className={`bg-background text-foreground rounded-lg p-4 md:p-8 shadow-lg relative max-h-[90vh] overflow-auto ${sizeClass}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // Empêche le clic dans la modale de la fermer
           >
             <button
               className="flex items-center justify-center absolute top-2 right-2 p-2 w-10 h-10 text-white rounded-2xl bg-black/10 hover:bg-red-500/60 transition duration-400 cursor-pointer z-50"
@@ -99,11 +103,11 @@ export default function WiiUPortfolio() {
   const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
   const [modalSizeClass, setModalSizeClass] = useState<string>('w-11/12 md:w-5/6 h-5/6')
 
-  // Gestion de la page actuelle
   const [currentPage, setCurrentPage] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Gestion du nombre d'items par page en fonction de la taille de l'écran
+  // Calcule dynamiquement combien d'applications on peut afficher par page 
+  // selon la largeur de l'écran pour éviter que la grille ne déborde.
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth
@@ -113,6 +117,8 @@ export default function WiiUPortfolio() {
     }
     return 15
   })
+  
+  // Définit le nombre de colonnes de la grille pour adapter la mise en page
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth
@@ -123,6 +129,7 @@ export default function WiiUPortfolio() {
     return 5
   })
 
+  // Permet de rafraîchir la grille (colonnes et nb items) quand l'utilisateur redimensionne la fenêtre
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth

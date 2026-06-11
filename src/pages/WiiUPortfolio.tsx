@@ -103,38 +103,62 @@ export default function WiiUPortfolio() {
   const [currentPage, setCurrentPage] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
+  // Détection du mode paysage mobile / écran court
+  const [isLandscapeMobile, setIsLandscapeMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerHeight < 550 && window.innerWidth > window.innerHeight
+    }
+    return false
+  })
+
   // Gestion du nombre d'items par page en fonction de la taille de l'écran
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 640) return 6
-      if (window.innerWidth < 1024) return 9
-      if (window.innerWidth < 1400) return 12
+      const width = window.innerWidth
+      const height = window.innerHeight
+      if (height < 550 && width > height) return 10
+      if (width < 640) return 6
+      if (width < 1024) return 9
+      if (width < 1400) return 12
     }
     return 15
   })
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 640) return 2
-      if (window.innerWidth < 1024) return 3
-      if (window.innerWidth < 1400) return 4
+      const width = window.innerWidth
+      const height = window.innerHeight
+      if (height < 550 && width > height) return 5
+      if (width < 640) return 2
+      if (width < 1024) return 3
+      if (width < 1400) return 4
     }
     return 5
   })
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setItemsPerPage(6)
-        setGridCols(2)
-      } else if (window.innerWidth < 1024) {
-        setItemsPerPage(9)
-        setGridCols(3)
-      } else if (window.innerWidth < 1400) {
-        setItemsPerPage(12)
-        setGridCols(4)
-      } else {
-        setItemsPerPage(15)
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const isLandscape = height < 550 && width > height
+      setIsLandscapeMobile(isLandscape)
+
+      if (isLandscape) {
+        setItemsPerPage(10)
         setGridCols(5)
+      } else {
+        if (width < 640) {
+          setItemsPerPage(6)
+          setGridCols(2)
+        } else if (width < 1024) {
+          setItemsPerPage(9)
+          setGridCols(3)
+        } else if (width < 1400) {
+          setItemsPerPage(12)
+          setGridCols(4)
+        } else {
+          setItemsPerPage(15)
+          setGridCols(5)
+        }
       }
     }
 
@@ -293,15 +317,16 @@ export default function WiiUPortfolio() {
   return (
     <div className={'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
       <SplashScreen isLoading={isLoading} />
-
-      {/* ---- Navigation Mobile (Haut) ---- */}
-      <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
-        <div className="flex items-center gap-3">
-          <ProfileTile isMobile />
-          <span className="text-xs md:text-sm font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
-        </div>
-        <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
+{/* ---- Navigation Mobile (Haut) ---- */}
+{!isLandscapeMobile && (
+    <div className="lg:hidden flex items-center justify-between px-6 py-5 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
+      <div className="flex items-center gap-4">
+        <ProfileTile isMobile />
+        <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
       </div>
+      <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
+    </div>
+)}
 
       <div className="flex grow overflow-hidden relative">
         {/*Left side (Desktop)*/}
@@ -325,14 +350,14 @@ export default function WiiUPortfolio() {
         {/*Center*/}
         <div className={'grow flex flex-col relative overflow-hidden'}>
           {/*Center Header - Indicateurs de pages*/}
-          <header className="h-10 md:h-20 flex flex-col items-center justify-end pb-2 md:pb-4 z-10">
-            <div className="flex space-x-2 md:space-x-4 items-center">
+          <header className={`${isLandscapeMobile ? 'h-10' : 'h-14 md:h-24'} flex flex-col items-center justify-end pb-3 md:pb-6 z-10`}>
+            <div className={`flex ${isLandscapeMobile ? 'space-x-2' : 'space-x-3 md:space-x-6'} items-center`}>
               {Array.from({ length: totalPages }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-2.5 h-2.5 md:w-5 md:h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
+                  className={`${isLandscapeMobile ? 'w-2 h-2' : 'w-3.5 h-3.5 md:w-6 md:h-6'} rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-125 md:scale-150 shadow-tileselected/50 drop-shadow-md'
@@ -413,7 +438,7 @@ export default function WiiUPortfolio() {
           </motion.div>
 
           {/*Center Footer*/}
-          <footer className="h-20 md:h-36 flex items-center justify-center gap-6 md:gap-10 p-2 pb-6">
+          <footer className={`${isLandscapeMobile ? 'h-16' : 'h-28 md:h-44'} flex items-center justify-center gap-8 md:gap-14 p-2 pb-8`}>
             {footerApps.map((app, index) => (
               <FooterIcon
                 key={index}

@@ -11,6 +11,7 @@ import RustGarden from './modalsContents/RustGarden.tsx'
 import Palette from './modalsContents/Palette.tsx'
 
 // --- Splash Screen ---
+// Affiché brièvement au chargement du site pour masquer le temps de rendu initial.
 function SplashScreen({ isLoading }: { isLoading: boolean }) {
   return (
     <AnimatePresence>
@@ -31,6 +32,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
             <h1 className="text-3xl md:text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
               Thomas MARIE--DUVAL
             </h1>
+            {/* Les 3 petits points de chargement qui clignotent */}
             <div className="mt-8 flex space-x-2">
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
@@ -56,6 +58,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
 }
 
 // --- Modal ---
+// C'est ce conteneur qui s'ouvre lorsqu'on clique sur une application de la grille ou du footer ou une tuile.
 function DynamicOverlay({
   activeContent,
   onClose,
@@ -74,11 +77,12 @@ function DynamicOverlay({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          // Ferme la modale si on clique à côté
           onClick={onClose}
         >
           <div
             className={`bg-background text-foreground rounded-lg p-4 md:p-8 shadow-lg relative max-h-[90vh] overflow-auto ${sizeClass}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // Empêche le clic dans la modale de la fermer
           >
             <button
               className="flex items-center justify-center absolute top-2 right-2 p-2 w-10 h-10 text-white rounded-2xl bg-black/10 hover:bg-red-500/60 transition duration-400 cursor-pointer z-50"
@@ -99,11 +103,11 @@ export default function WiiUPortfolio() {
   const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
   const [modalSizeClass, setModalSizeClass] = useState<string>('w-11/12 md:w-5/6 h-5/6')
 
-  // Gestion de la page actuelle
   const [currentPage, setCurrentPage] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Gestion du nombre d'items par page en fonction de la taille de l'écran
+  // Calcule dynamiquement combien d'applications on peut afficher par page
+  // selon la largeur de l'écran pour éviter que la grille ne déborde.
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth
@@ -113,6 +117,8 @@ export default function WiiUPortfolio() {
     }
     return 15
   })
+
+  // Définit le nombre de colonnes de la grille pour adapter la mise en page
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth
@@ -123,6 +129,7 @@ export default function WiiUPortfolio() {
     return 5
   })
 
+  // Permet de rafraîchir la grille (colonnes et nb items) quand l'utilisateur redimensionne la fenêtre
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
@@ -294,14 +301,20 @@ export default function WiiUPortfolio() {
   })
 
   return (
-    <div className={'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
+    <div
+      className={
+        'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'
+      }
+    >
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Navigation Mobile (Haut) ---- */}
       <div className="lg:hidden flex items-center justify-between px-6 py-5 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
         <div className="flex items-center gap-4">
           <ProfileTile isMobile />
-          <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
+          <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">
+            Thomas Marie--Duval
+          </span>
         </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
@@ -318,7 +331,16 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page précédente"
             >
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m15 18-6-6 6-6" />
               </svg>
             </button>
@@ -354,29 +376,29 @@ export default function WiiUPortfolio() {
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
           >
-            {/* Flèches Mobile Overlay - Plus discrètes */}
+            {/* Flèches Mobile Overlay (mobile / tablet) */}
             <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-1 z-20 pointer-events-none opacity-50">
-                {currentPage > 0 && (
-                    <button
-                        onClick={() => setCurrentPage((curr) => curr - 1)}
-                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
-                    >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                            <path d="m15 18-6-6 6-6" />
-                        </svg>
-                    </button>
-                )}
-                <div />
-                {currentPage < totalPages - 1 && (
-                    <button
-                        onClick={() => setCurrentPage((curr) => curr + 1)}
-                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
-                    >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </button>
-                )}
+              {currentPage > 0 && (
+                <button
+                  onClick={() => setCurrentPage((curr) => curr - 1)}
+                  className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+              )}
+              <div />
+              {currentPage < totalPages - 1 && (
+                <button
+                  onClick={() => setCurrentPage((curr) => curr + 1)}
+                  className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              )}
             </div>
 
             {/* Grille animée */}
@@ -388,8 +410,8 @@ export default function WiiUPortfolio() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
                 style={{
-                    gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-                    gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, min-content)`
+                  gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, min-content)`,
                 }}
                 className="absolute inset-0 grid gap-3 md:gap-4 lg:gap-6 xl:gap-8 p-4 md:p-6 xl:p-8 place-content-center justify-items-center"
               >
@@ -442,7 +464,16 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page suivante"
             >
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </button>

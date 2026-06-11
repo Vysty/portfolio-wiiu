@@ -5,7 +5,7 @@ const bubbleVariants: Variants = {
   rest: { opacity: 0, y: 10, scale: 0.8, display: 'none' },
   hover: {
     opacity: 1,
-    y: -10, // La bulle monte légèrement
+    y: -10,
     scale: 1,
     display: 'block',
     transition: { type: 'spring', stiffness: 300, damping: 20 },
@@ -13,8 +13,8 @@ const bubbleVariants: Variants = {
 }
 
 export default function Bubble({ pos, label }: { pos: 'top' | 'bottom'; label: string }) {
+  // Ajuste la position de la bulle et de son triangle directionnel en fonction de 'pos'
   const bubblePositionClass = pos === 'top' ? 'bottom-full mb-6 md:mb-10' : 'top-full mt-6 md:mt-10'
-
   const arrowPositionClass = pos === 'top' ? '-bottom-2 translate-y-[-2px]' : '-top-2 translate-y-[2px]'
 
   return (

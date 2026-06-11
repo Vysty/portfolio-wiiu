@@ -1,4 +1,5 @@
 import Badge from '../../components/Badge.tsx'
+import ZoomableImage from '../../components/ZoomableImage.tsx'
 
 export default function Palette() {
   return (
@@ -30,10 +31,10 @@ export default function Palette() {
             </p>
           </div>
           <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
-            <img
+            <ZoomableImage
               src="/modalImage/PreparationInterface.png"
               alt="Image de l'interface utilisateur du projet"
-              className="h-auto max-w-full rounded-lg object-contain shadow-md"
+              className="shadow-md"
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 import Badge from '../../components/Badge.tsx'
+import ZoomableImage from '../../components/ZoomableImage.tsx'
 
 export default function RustGarden() {
   return (
@@ -28,10 +29,10 @@ export default function RustGarden() {
             </p>
           </div>
           <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
-            <img
+            <ZoomableImage
               src="/modalImage/rustGarden.png"
               alt="RustGarden"
-              className="h-auto max-w-full rounded-lg object-contain shadow-md"
+              className="shadow-md"
             />
           </div>
         </div>

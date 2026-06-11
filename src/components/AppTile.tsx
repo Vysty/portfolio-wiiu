@@ -25,11 +25,7 @@ export default function AppTile({ label, icon, content, onOpen, bubblePos }: App
     >
       <Bubble pos={bubblePos} label={label} />
 
-      <img
-        src={icon}
-        alt={'Image de ' + label}
-        className="w-full h-full object-cover rounded-lg overflow-hidden "
-      />
+      <img src={icon} alt={'Image de ' + label} className="w-full h-full object-cover rounded-lg overflow-hidden " />
     </motion.div>
   )
 }

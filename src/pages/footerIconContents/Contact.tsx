@@ -31,7 +31,7 @@ export default function Contact() {
             </li>
           </ul>
         </div>
-        
+
         {/* Section Téléphone */}
         <div className={'flex flex-col gap-1'}>
           <div className={'flex gap-2 md:gap-3'}>

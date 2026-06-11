@@ -16,14 +16,14 @@ une application web interactive. Je me suis donc inspiré de l'interface de la c
 
 Installation des dépendances :
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 Lance le serveur de développement :
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
 `http://localhost:5173` dans ton navigateur.

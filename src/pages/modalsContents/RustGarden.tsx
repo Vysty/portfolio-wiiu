@@ -7,7 +7,6 @@ export default function RustGarden() {
     <div className={'flex flex-col h-full'}>
       <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
         <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
-
           {/* Section Texte */}
           <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>
             <h2 className="text-2xl md:text-4xl font-bold">Rust Garden</h2>
@@ -34,11 +33,7 @@ export default function RustGarden() {
 
           {/* Section Image avec fonction d'agrandissement */}
           <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
-            <ZoomableImage
-              src="/modalImage/rustGarden.png"
-              alt="RustGarden"
-              className="shadow-md"
-            />
+            <ZoomableImage src="/modalImage/rustGarden.png" alt="RustGarden" className="shadow-md" />
           </div>
         </div>
 
@@ -84,4 +79,3 @@ export default function RustGarden() {
     </div>
   )
 }
-

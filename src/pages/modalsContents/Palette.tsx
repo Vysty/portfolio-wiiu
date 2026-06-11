@@ -6,7 +6,6 @@ export default function Palette() {
   return (
     <div className={'flex flex-col h-full'}>
       <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
-        
         {/* Présentation principale : texte à gauche (ou dessous sur mobile), image à droite */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
           <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>

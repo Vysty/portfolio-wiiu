@@ -1,5 +1,5 @@
 export default function EmptyTile() {
   return (
-    <div className="w-44 h-44 rounded-lg flex flex-col items-center justify-center text-center shadow-lg bg-tilescolor/80 transition-colors duration-500"></div>
+    <div className="w-24 h-24 md:w-32 md:h-32 lg:w-44 lg:h-44 rounded-lg flex flex-col items-center justify-center text-center shadow-lg bg-tilescolor/80 transition-colors duration-500"></div>
   )
 }

@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 export default function AboutMe() {
   return (
     <div className={'flex flex-col h-full overflow-x-hidden'}>
-      <div className="flex flex-col overflow-y-auto overflow-x-hidden h-full w-full p-4 space-y-4 gap-5">
-        <div className="flex flex-col gap-4 text-justify text-xl w-full items-start">
-          <h2 className="text-4xl font-bold">À propos de moi</h2>
+      <div className="flex flex-col overflow-y-auto overflow-x-hidden h-full w-full p-2 md:p-4 space-y-4 gap-5">
+        <div className="flex flex-col gap-4 text-justify text-base md:text-xl w-full items-start">
+          <h2 className="text-2xl md:text-4xl font-bold">À propos de moi</h2>
           <p>Je suis Thomas, actuellement en troisième année de BUT Informatique à l'IUT de Valence.</p>
 
           <p>
@@ -22,9 +22,9 @@ export default function AboutMe() {
         </div>
 
         <div className={'flex flex-col gap-6'}>
-          <h3 className={'text-2xl font-bold'}>Stack Technique :</h3>
-          <p>Les technologies que j'utilise au quotidien.</p>
-          <div className={'w-full grid grid-cols-3 gap-8 gap-x-12 px-5'}>
+          <h3 className={'text-xl md:text-2xl font-bold'}>Stack Technique :</h3>
+          <p className="text-sm md:text-base">Les technologies que j'utilise au quotidien.</p>
+          <div className={'w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 px-0 md:px-5'}>
             <StackBadgeAbout title={'React / React Native'} content={'Interfaces web et mobiles réactives'}>
               <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <title>React</title>
@@ -118,15 +118,15 @@ export default function AboutMe() {
 function StackBadgeAbout({ title, content, children }: { title: string; content: string; children?: React.ReactNode }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.1 }}
+      whileHover={{ scale: 1.05 }}
       className={
-        'bg-tilescolor border-5 border-transparent hover:border-tileselected rounded-lg h-fit flex gap-1 p-4 justify-start items-center'
+        'bg-tilescolor border-2 md:border-5 border-transparent hover:border-tileselected rounded-lg h-fit flex gap-2 p-3 md:p-4 justify-start items-center'
       }
     >
-      <div className={'flex items-center justify-center [&_svg]:size-10'}>{children}</div>
-      <div className={'flex flex-col ml-2'}>
-        <p className={'text-2xl font-semibold'}>{title}</p>
-        <p className={'text-sm break-word'}>{content}</p>
+      <div className={'flex items-center justify-center [&_svg]:size-8 md:[&_svg]:size-10 flex-shrink-0'}>{children}</div>
+      <div className={'flex flex-col ml-1 md:ml-2'}>
+        <p className={'text-lg md:text-2xl font-semibold leading-tight'}>{title}</p>
+        <p className={'text-xs md:text-sm break-word'}>{content}</p>
       </div>
     </motion.div>
   )

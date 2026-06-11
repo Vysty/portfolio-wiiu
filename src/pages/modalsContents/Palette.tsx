@@ -3,10 +3,10 @@ import Badge from '../../components/Badge.tsx'
 export default function Palette() {
   return (
     <div className={'flex flex-col h-full'}>
-      <div className="flex flex-col overflow-y-auto h-full w-full p-4 space-y-4 gap-5">
-        <div className="grid w-full grid-cols-[9fr_11fr] gap-10 items-start">
-          <div className={'flex flex-col gap-4 text-justify text-xl min-w-0'}>
-            <h2 className="text-4xl font-bold">Logiciel industriel d'assistance à la préparation en entrepôt</h2>
+      <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
+          <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>
+            <h2 className="text-2xl md:text-4xl font-bold">Logiciel industriel d'assistance à la préparation en entrepôt</h2>
             <p>
               Cette application a été conçue pour assister la préparation de palettes destinées au restockage de
               supermarchés. Elle accompagne les préparateurs de commandes en temps réel sur le terrain afin d'accroître
@@ -29,18 +29,18 @@ export default function Palette() {
               plus stable pour le placement du prochain colis.
             </p>
           </div>
-          <div className={'flex items-start justify-center overflow-hidden min-w-0'}>
+          <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
             <img
               src="/modalImage/PreparationInterface.png"
               alt="Image de l'interface utilisateur du projet"
-              className="h-auto max-w-full rounded-lg object-contain"
+              className="h-auto max-w-full rounded-lg object-contain shadow-md"
             />
           </div>
         </div>
 
-        <div className={'flex flex-col gap-8'}>
-          <h3 className={'text-2xl font-bold'}>Stack Technique :</h3>
-          <div className={'flex justify-around items-start'}>
+        <div className={'flex flex-col gap-6 md:gap-8'}>
+          <h3 className={'text-xl md:text-2xl font-bold'}>Stack Technique :</h3>
+          <div className={'grid grid-cols-1 md:flex md:justify-around items-start gap-4'}>
             <Badge
               title={'FrontEnd'}
               content={'React, Tailwind CSS, Three.js, Web Speech API pour le STT et TTS natifs'}

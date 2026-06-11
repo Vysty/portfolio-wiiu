@@ -61,7 +61,6 @@ export default function ThemeToggleButton({ theme, setTheme, isMobile = false }:
         isMobile ? 'p-2.5 md:p-3 border-4 md:border-6' : 'p-3 md:p-4 border-8 lg:border-12'
       } rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-500 text-foreground bg-background hover:bg-foreground hover:text-background border-tilescolor/80 hover:border-tileselected`}
     >
-      {/* Si on est en Dark, on montre le soleil pour passer en Light. Sinon, la lune. */}
       <div className={`${isMobile ? 'scale-90 md:scale-100' : 'scale-100 lg:scale-110'}`}>
         {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
       </div>

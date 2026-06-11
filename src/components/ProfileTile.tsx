@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import { tileVariants } from '../styles/FramerConsts.ts'
 import Bubble from './Bubble.tsx'
 
-//TODO : Améliorer le Composant ProfileTile pour les intégrations onclick etc
 export default function ProfileTile({ isMobile = false }: { isMobile?: boolean }) {
   return (
     <motion.a

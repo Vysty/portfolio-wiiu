@@ -5,7 +5,7 @@ const bubbleVariants: Variants = {
   rest: { opacity: 0, y: 10, scale: 0.8, display: 'none' },
   hover: {
     opacity: 1,
-    y: -10, // La bulle monte légèrement
+    y: -10,
     scale: 1,
     display: 'block',
     transition: { type: 'spring', stiffness: 300, damping: 20 },

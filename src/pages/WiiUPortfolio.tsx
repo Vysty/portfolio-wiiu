@@ -354,7 +354,7 @@ export default function WiiUPortfolio() {
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
           >
-            {/* Flèches Mobile Overlay - Plus discrètes */}
+            {/* Flèches Mobile Overlay (mobile / tablet) */}
             <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-1 z-20 pointer-events-none opacity-50">
                 {currentPage > 0 && (
                     <button

@@ -26,7 +26,7 @@ export default function AppTile({ label, icon, content, onOpen, bubblePos }: App
       <img
         src={icon}
         alt={'Image de ' + label}
-        className="w-full h-full object-cover rounded-lg overflow-hidden " // rounded-md ajouté pour adoucir l'image
+        className="w-full h-full object-cover rounded-lg overflow-hidden "
       />
     </motion.div>
   )

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import {motion} from 'framer-motion'
 
 export default function AboutMe() {
   return (
@@ -62,6 +62,11 @@ export default function AboutMe() {
                 />
               </svg>
             </StackBadgeAbout>
+            <StackBadgeAbout title={"Framer Motion"} content={"Animations fluides pour React"}>
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Framer</title>
+                <path fill={'currentColor'} d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z"/>
+              </svg>
+            </StackBadgeAbout>
             <StackBadgeAbout title={'Three.js'} content={'Rendu 3D interactif et immersif'}>
               <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <title>Three.js</title>
@@ -115,15 +120,16 @@ export default function AboutMe() {
   )
 }
 
-function StackBadgeAbout({ title, content, children }: { title: string; content: string; children?: React.ReactNode }) {
+function StackBadgeAbout({title, content, children}: { title: string; content: string; children?: React.ReactNode }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
+      whileHover={{scale: 1.05}}
       className={
         'bg-tilescolor border-2 md:border-5 border-transparent hover:border-tileselected rounded-lg h-fit flex gap-2 p-3 md:p-4 justify-start items-center'
       }
     >
-      <div className={'flex items-center justify-center [&_svg]:size-8 md:[&_svg]:size-10 flex-shrink-0'}>{children}</div>
+      <div
+        className={'flex items-center justify-center [&_svg]:size-8 md:[&_svg]:size-10 flex-shrink-0'}>{children}</div>
       <div className={'flex flex-col ml-1 md:ml-2'}>
         <p className={'text-lg md:text-2xl font-semibold leading-tight'}>{title}</p>
         <p className={'text-xs md:text-sm break-word'}>{content}</p>

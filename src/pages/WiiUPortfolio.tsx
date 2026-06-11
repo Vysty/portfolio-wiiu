@@ -106,30 +106,30 @@ export default function WiiUPortfolio() {
   // Gestion du nombre d'items par page en fonction de la taille de l'écran
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 550) return 6
-      if (window.innerWidth < 850) return 9
-      if (window.innerWidth < 1150) return 12
+      if (window.innerWidth < 640) return 6
+      if (window.innerWidth < 1024) return 9
+      if (window.innerWidth < 1400) return 12
     }
     return 15
   })
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 550) return 2
-      if (window.innerWidth < 850) return 3
-      if (window.innerWidth < 1150) return 4
+      if (window.innerWidth < 640) return 2
+      if (window.innerWidth < 1024) return 3
+      if (window.innerWidth < 1400) return 4
     }
     return 5
   })
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 550) {
+      if (window.innerWidth < 640) {
         setItemsPerPage(6)
         setGridCols(2)
-      } else if (window.innerWidth < 850) {
+      } else if (window.innerWidth < 1024) {
         setItemsPerPage(9)
         setGridCols(3)
-      } else if (window.innerWidth < 1150) {
+      } else if (window.innerWidth < 1400) {
         setItemsPerPage(12)
         setGridCols(4)
       } else {
@@ -298,14 +298,14 @@ export default function WiiUPortfolio() {
       <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
         <div className="flex items-center gap-3">
           <ProfileTile isMobile />
-          <span className="text-sm font-bold text-foreground/70 uppercase tracking-widest">Thomas Marie--Duval</span>
+          <span className="text-xs md:text-sm font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
         </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
 
       <div className="flex grow overflow-hidden relative">
         {/*Left side (Desktop)*/}
-        <div className={'hidden lg:flex w-42 h-screen flex-col items-center justify-start p-4 relative'}>
+        <div className={'hidden lg:flex w-32 xl:w-42 h-screen flex-col items-center justify-start p-4 relative'}>
           <ProfileTile />
 
           {/* Flèche Gauche */}
@@ -388,7 +388,7 @@ export default function WiiUPortfolio() {
                     gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
                     gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, minmax(0, 1fr))`
                 }}
-                className="absolute inset-0 grid gap-3 md:gap-4 lg:gap-6 p-4 md:p-6 place-content-center justify-items-center"
+                className="absolute inset-0 grid gap-4 md:gap-6 xl:gap-8 p-4 md:p-6 xl:p-10 place-content-center justify-items-center"
               >
                 {gridSlots.map((app, index) => {
                   if (app) {
@@ -430,7 +430,7 @@ export default function WiiUPortfolio() {
         </div>
 
         {/*Right side (Desktop)*/}
-        <div className={'hidden lg:flex w-42 h-screen flex-col items-center justify-start p-4 relative'}>
+        <div className={'hidden lg:flex w-32 xl:w-42 h-screen flex-col items-center justify-start p-4 relative'}>
           <ThemeToggleButton theme={theme} setTheme={setTheme} />
           {/* Flèche Droite */}
           {currentPage < totalPages - 1 && (

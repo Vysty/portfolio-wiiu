@@ -17,7 +17,11 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
         className={`relative group cursor-zoom-in overflow-hidden rounded-lg ${className}`}
         onClick={() => setIsOpen(true)}
       >
-        <img src={src} alt={alt} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+        />
 
         {/* Overlay au survol (Desktop) */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
@@ -65,7 +69,7 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
                 alt={alt}
                 className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm border border-white/10"
               />
-              
+
               {/* Bouton de fermeture plein écran */}
               <button
                 className="absolute -top-12 right-0 md:-right-12 md:top-0 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 cursor-pointer"

@@ -266,7 +266,7 @@ export default function WiiUPortfolio() {
 
     const handleWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < 10) return // Ignorer les petits scrolls
-      
+
       if (e.deltaY > 0) {
         setCurrentPage((curr) => (curr < totalPages - 1 ? curr + 1 : curr))
       } else if (e.deltaY < 0) {
@@ -294,14 +294,20 @@ export default function WiiUPortfolio() {
   })
 
   return (
-    <div className={'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
+    <div
+      className={
+        'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'
+      }
+    >
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Navigation Mobile (Haut) ---- */}
       <div className="lg:hidden flex items-center justify-between px-6 py-5 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
         <div className="flex items-center gap-4">
           <ProfileTile isMobile />
-          <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
+          <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">
+            Thomas Marie--Duval
+          </span>
         </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
@@ -318,7 +324,16 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page précédente"
             >
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m15 18-6-6 6-6" />
               </svg>
             </button>
@@ -348,7 +363,7 @@ export default function WiiUPortfolio() {
           </header>
 
           {/* --- ZONE PRINCIPALE : Grille --- */}
-          <motion.div 
+          <motion.div
             className="grow relative overflow-hidden flex items-center justify-center touch-none"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
@@ -356,27 +371,27 @@ export default function WiiUPortfolio() {
           >
             {/* Flèches Mobile Overlay - Plus discrètes */}
             <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-1 z-20 pointer-events-none opacity-50">
-                {currentPage > 0 && (
-                    <button
-                        onClick={() => setCurrentPage((curr) => curr - 1)}
-                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
-                    >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                            <path d="m15 18-6-6 6-6" />
-                        </svg>
-                    </button>
-                )}
-                <div />
-                {currentPage < totalPages - 1 && (
-                    <button
-                        onClick={() => setCurrentPage((curr) => curr + 1)}
-                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
-                    >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </button>
-                )}
+              {currentPage > 0 && (
+                <button
+                  onClick={() => setCurrentPage((curr) => curr - 1)}
+                  className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+              )}
+              <div />
+              {currentPage < totalPages - 1 && (
+                <button
+                  onClick={() => setCurrentPage((curr) => curr + 1)}
+                  className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              )}
             </div>
 
             {/* Grille animée */}
@@ -388,8 +403,8 @@ export default function WiiUPortfolio() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
                 style={{
-                    gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-                    gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, minmax(0, 1fr))`
+                  gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, minmax(0, 1fr))`,
                 }}
                 className="absolute inset-0 grid gap-4 md:gap-6 xl:gap-8 p-4 md:p-6 xl:p-10 place-content-center justify-items-center"
               >
@@ -442,7 +457,16 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page suivante"
             >
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </button>

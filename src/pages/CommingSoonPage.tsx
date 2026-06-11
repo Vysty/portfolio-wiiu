@@ -1,7 +1,6 @@
 import '../styles/commingSoonAnimation.css'
 
 export default function CommingSoonPage() {
-
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-slate-900 to-gray-800 flex flex-col items-center justify-center text-white px-4">
       <h1 className="text-1xl md:text-4xl font-semibold mb-2 tracking-wide">Thomas Marie--Duval</h1>

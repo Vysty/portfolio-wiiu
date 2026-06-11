@@ -174,22 +174,22 @@ export default function WiiUPortfolio() {
   // --- LISTE DES APPLICATIONS ---
   const APPS: App[] = [
     {
-      position: 2,
+      position: 1,
       label: 'Projet RustGarden',
       icon: '/icons/modalIcon/RustGarden.png',
       content: <RustGarden />,
     },
     {
-      position: 12,
+      position: 13,
       label: 'Logiciel industriel d\'assistance à la  préparation en entrepôt',
       icon: '/icons/modalIcon/Palette.png',
       content: <Palette />,
     },
     {
-      position: 16,
-      label: 'Contact',
+      position: 19,
+      label: 'Placeholder',
       icon: '/PlaceHolderImage.jpg',
-      content: <div>Formulaire de contact</div>,
+      content: <div>Placeholder</div>,
     },
   ]
 

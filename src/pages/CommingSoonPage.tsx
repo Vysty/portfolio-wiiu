@@ -1,16 +1,21 @@
+import { useState, useEffect } from 'react'
 import '../styles/commingSoonAnimation.css'
 
 export default function CommingSoonPage() {
-  const listOfSentences = [
-    'Mon portfolio est en construction. Merci de votre patience !',
-    'Je peaufine les derniers détails...',
-    'En ligne très prochainement.',
-    'Je finalise mon portfolio pour une mise en ligne prochaine.',
-    'Actuellement hors ligne pour rénovation.',
-    'Mon site est temporairement indisponible — retour très bientôt.',
-  ]
+  const [currentSentence, setCurrentSentence] = useState('')
 
-  const currentSentence = listOfSentences[Math.floor(Math.random() * listOfSentences.length)]
+  useEffect(() => {
+    const listOfSentences = [
+      'Mon portfolio est en construction. Merci de votre patience !',
+      'Je peaufine les derniers détails...',
+      'En ligne très prochainement.',
+      'Je finalise mon portfolio pour une mise en ligne prochaine.',
+      'Actuellement hors ligne pour rénovation.',
+      'Mon site est temporairement indisponible — retour très bientôt.',
+    ]
+    const sentence = listOfSentences[Math.floor(Math.random() * listOfSentences.length)]
+    setCurrentSentence(sentence)
+  }, [])
 
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-slate-900 to-gray-800 flex flex-col items-center justify-center text-white px-4">

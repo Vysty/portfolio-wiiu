@@ -111,7 +111,14 @@ export default function WiiUPortfolio() {
   const [isLoading, setIsLoading] = useState(true)
 
   // Gestion du thème
-  const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme
+    }
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    return prefersDark ? 'dark' : 'light'
+  })
 
   // Minuteur pour le chargement de la page
   useEffect(() => {
@@ -120,17 +127,6 @@ export default function WiiUPortfolio() {
     }, 1500) // 2000 millisecondes = 2 secondes
 
     return () => clearTimeout(timer)
-  }, [])
-
-  // Initialisation du thème au chargement
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      setTheme(storedTheme)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-    }
   }, [])
 
   // Appliquer le thème au DOM et sauvegarder en localStorage

@@ -438,7 +438,7 @@ export default function WiiUPortfolio() {
           {/* Flèche Droite */}
           {currentPage < totalPages - 1 && (
             <button
-              onClick={() => setCurrentPage((curr) => curr - 1)}
+              onClick={() => setCurrentPage((curr) => curr + 1)}
               className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page suivante"
             >

@@ -4,8 +4,8 @@ export default function RustGarden() {
   return (
     <div className={"flex flex-col h-full"}>
       <div className="flex flex-col overflow-y-auto h-full w-full p-4 space-y-4 gap-5">
-        <div className="flex w-full gap-10">
-          <div className={"flex flex-col gap-4 text-justify text-xl"}>
+        <div className="grid w-full grid-cols-[9fr_11fr] gap-10 items-start">
+          <div className={"flex flex-col gap-4 text-justify text-xl min-w-0"}>
             <h2 className="text-4xl font-bold">Rust Garden</h2>
             <p>RustGarden est un système IoT complet dédié à la surveillance environnementale et à l'automatisation de
               l'entretien des plantes.</p>
@@ -26,18 +26,18 @@ export default function RustGarden() {
 
 
           </div>
-          <div className={"grow flex items-start justify-center overflow-hidden"}>
+          <div className={"flex items-start justify-center overflow-hidden min-w-0"}>
             <img
               src="/modalImage/rustGarden.png"
               alt="RustGarden"
-              className="h-auto rounded-lg"
+              className="h-auto max-w-full rounded-lg object-contain"
             />
           </div>
         </div>
 
         <div className={"flex flex-col gap-8"}>
           <h3 className={"text-2xl font-bold"}>Stack Technique :</h3>
-          <div className={"flex justify-between items-center"}>
+          <div className={"flex justify-around items-start"}>
             <Badge title={"FrontEnd"} content={"Dioxus (Rust), requêtes REST API"}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path fill-rule="evenodd"

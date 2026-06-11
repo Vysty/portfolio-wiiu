@@ -29,11 +29,7 @@ export default function RustGarden() {
             </p>
           </div>
           <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
-            <ZoomableImage
-              src="/modalImage/rustGarden.png"
-              alt="RustGarden"
-              className="shadow-md"
-            />
+            <ZoomableImage src="/modalImage/rustGarden.png" alt="RustGarden" className="shadow-md" />
           </div>
         </div>
 

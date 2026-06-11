@@ -7,7 +7,9 @@ export default function Palette() {
       <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
         <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
           <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>
-            <h2 className="text-2xl md:text-4xl font-bold">Logiciel industriel d'assistance à la préparation en entrepôt</h2>
+            <h2 className="text-2xl md:text-4xl font-bold">
+              Logiciel industriel d'assistance à la préparation en entrepôt
+            </h2>
             <p>
               Cette application a été conçue pour assister la préparation de palettes destinées au restockage de
               supermarchés. Elle accompagne les préparateurs de commandes en temps réel sur le terrain afin d'accroître

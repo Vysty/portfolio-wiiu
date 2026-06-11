@@ -232,8 +232,8 @@ export default function WiiUPortfolio() {
       content: <AboutMe />,
     },
     {
-      label: 'Linkedln',
-      icon: '/icons/linkedln.png',
+      label: 'LinkedIn',
+      icon: '/icons/linkedIn.png',
       redirect: 'https://linkedin.com/in/thomas-marie-duval',
     },
     {

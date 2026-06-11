@@ -10,9 +10,6 @@ import Contact from './footerIconContents/Contact.tsx'
 import RustGarden from './modalsContents/RustGarden.tsx'
 import Palette from './modalsContents/Palette.tsx'
 
-// Constante pour définir le nombre de tuiles par page (grille 5x3)
-const ITEMS_PER_PAGE = 15
-
 // --- Splash Screen ---
 function SplashScreen({ isLoading }: { isLoading: boolean }) {
   return (
@@ -23,32 +20,32 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
           initial={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-100 bg-tilescolor flex flex-col items-center justify-center shadow-2xl transition-colors duration-500"
+          className="fixed inset-0 z-[100] bg-tilescolor flex flex-col items-center justify-center shadow-2xl transition-colors duration-500 p-4"
         >
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center text-center">
             <img
               src={'/Photo.jpg'}
               alt={'Image de profile'}
-              className="w-52 h-52 object-cover rounded-3xl border-12 border-tileselected bg-tileselected overflow-hidden"
+              className="w-32 h-32 md:w-52 md:h-52 object-cover rounded-3xl border-8 md:border-12 border-tileselected bg-tileselected overflow-hidden"
             />
-            <h1 className="text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
+            <h1 className="text-3xl md:text-5xl my-3 font-sans font-bold text-gray-400 tracking-widest drop-shadow-sm">
               Thomas MARIE--DUVAL
             </h1>
             <div className="mt-8 flex space-x-2">
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0 }}
-                className="w-5 h-5 bg-cyan-400 rounded-full"
+                className="w-3 h-3 md:w-5 md:h-5 bg-cyan-400 rounded-full"
               />
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
-                className="w-5 h-5 bg-cyan-400 rounded-full"
+                className="w-3 h-3 md:w-5 md:h-5 bg-cyan-400 rounded-full"
               />
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
-                className="w-5 h-5 bg-cyan-400 rounded-full"
+                className="w-3 h-3 md:w-5 md:h-5 bg-cyan-400 rounded-full"
               />
             </div>
           </div>
@@ -62,7 +59,7 @@ function SplashScreen({ isLoading }: { isLoading: boolean }) {
 function DynamicOverlay({
   activeContent,
   onClose,
-  sizeClass = 'w-5/6 h-5/6',
+  sizeClass = 'w-11/12 md:w-5/6 h-5/6',
 }: {
   activeContent: React.ReactNode | null
   onClose: () => void
@@ -76,23 +73,20 @@ function DynamicOverlay({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="absolute inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={onClose}
         >
           <div
-            className={`bg-background text-foreground rounded-lg p-8 shadow-lg ${sizeClass}`}
+            className={`bg-background text-foreground rounded-lg p-4 md:p-8 shadow-lg relative max-h-[90vh] overflow-auto ${sizeClass}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="flex items-center justify-center absolute top-4 right-4 p-2 text-white rounded-2xl bg-transparent hover:bg-red-500/60 transition duration-400 cursor-pointer"
+              className="flex items-center justify-center absolute top-2 right-2 p-2 w-10 h-10 text-white rounded-2xl bg-black/10 hover:bg-red-500/60 transition duration-400 cursor-pointer z-50"
               onClick={onClose}
             >
-              <img
-                src={'/icons/wiiu/cross.png'}
-                alt={'Fermer'}
-                className="w-full h-full object-cover overflow-hidden"
-              />
+              <img src={'/icons/wiiu/cross.png'} alt={'Fermer'} className="w-6 h-6 object-contain" />
             </button>
-            {activeContent}
+            <div className="h-full w-full pt-4 md:pt-0">{activeContent}</div>
           </div>
         </motion.div>
       )}
@@ -103,12 +97,51 @@ function DynamicOverlay({
 // --- Fonction principale ---
 export default function WiiUPortfolio() {
   const [activeContent, setActiveContent] = useState<React.ReactNode | null>(null)
-  const [modalSizeClass, setModalSizeClass] = useState<string>('w-5/6 h-5/6')
+  const [modalSizeClass, setModalSizeClass] = useState<string>('w-11/12 md:w-5/6 h-5/6')
 
   // Gestion de la page actuelle
   const [currentPage, setCurrentPage] = useState(0)
-
   const [isLoading, setIsLoading] = useState(true)
+
+  // Gestion du nombre d'items par page en fonction de la taille de l'écran
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 640) return 6
+      if (window.innerWidth < 1024) return 9
+      if (window.innerWidth < 1400) return 12
+    }
+    return 15
+  })
+  const [gridCols, setGridCols] = useState(() => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 640) return 2
+      if (window.innerWidth < 1024) return 3
+      if (window.innerWidth < 1400) return 4
+    }
+    return 5
+  })
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerPage(6)
+        setGridCols(2)
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(9)
+        setGridCols(3)
+      } else if (window.innerWidth < 1400) {
+        setItemsPerPage(12)
+        setGridCols(4)
+      } else {
+        setItemsPerPage(15)
+        setGridCols(5)
+      }
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Gestion du thème
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -124,7 +157,7 @@ export default function WiiUPortfolio() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1500) // 2000 millisecondes = 2 secondes
+    }, 2500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -146,7 +179,7 @@ export default function WiiUPortfolio() {
   const handleOpen = (content: React.ReactNode, sizeClass: string | null = null) => {
     setActiveContent(content)
     if (sizeClass == null) {
-      setModalSizeClass('w-5/6 h-5/6')
+      setModalSizeClass('w-11/12 md:w-5/6 h-5/6')
     } else {
       setModalSizeClass(sizeClass)
     }
@@ -209,50 +242,70 @@ export default function WiiUPortfolio() {
       label: 'Contact',
       icon: 'icons/wiiu/globe.png',
       content: <Contact />,
-      sizeClass: 'w-2/8 h-fit',
+      sizeClass: 'w-11/12 md:w-2/8 h-fit',
     },
   ]
 
   // --- LOGIQUE DE PAGINATION ET DE GRILLE ---
   const highestPosition = APPS.length > 0 ? Math.max(...APPS.map((app) => app.position)) : 0
-  const totalPages = Math.max(1, Math.ceil((highestPosition + 1) / ITEMS_PER_PAGE))
+  const totalPages = Math.max(1, Math.ceil((highestPosition + 1) / itemsPerPage))
+
+  // S'assurer que la page actuelle ne dépasse pas totalPages après un redimensionnement
+  useEffect(() => {
+    if (currentPage >= totalPages) {
+      setCurrentPage(Math.max(0, totalPages - 1))
+    }
+  }, [totalPages, currentPage])
 
   // Gestion du scroll à la souris pour changer de page
   useEffect(() => {
-    if (activeContent) return // Ne pas permettre le scroll si un modal est actif
+    if (activeContent) return
 
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault()
-
+      if (Math.abs(e.deltaY) < 10) return // Ignorer les petits scrolls
+      
       if (e.deltaY > 0) {
-        // Scroll vers le bas = page suivante
         setCurrentPage((curr) => (curr < totalPages - 1 ? curr + 1 : curr))
       } else if (e.deltaY < 0) {
-        // Scroll vers le haut = page précédente
         setCurrentPage((curr) => (curr > 0 ? curr - 1 : curr))
       }
     }
 
-    window.addEventListener('wheel', handleWheel, { passive: false })
-
-    return () => {
-      window.removeEventListener('wheel', handleWheel)
-    }
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    return () => window.removeEventListener('wheel', handleWheel)
   }, [activeContent, totalPages])
 
-  const gridSlots = Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => {
-    const absolutePosition = currentPage * ITEMS_PER_PAGE + index
+  // Gestion du swipe sur mobile
+  const handleDragEnd = (_: any, info: any) => {
+    const swipeThreshold = 50
+    if (info.offset.x < -swipeThreshold) {
+      setCurrentPage((curr) => (curr < totalPages - 1 ? curr + 1 : curr))
+    } else if (info.offset.x > swipeThreshold) {
+      setCurrentPage((curr) => (curr > 0 ? curr - 1 : curr))
+    }
+  }
+
+  const gridSlots = Array.from({ length: itemsPerPage }).map((_, index) => {
+    const absolutePosition = currentPage * itemsPerPage + index
     return APPS.find((app) => app.position === absolutePosition) || null
   })
 
   return (
-    <div className={'flex h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
+    <div className={'flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-background transition-colors duration-500'}>
       <SplashScreen isLoading={isLoading} />
 
-      {/* ---- Affichage de la page ---- */}
-      <AnimatePresence>
-        {/*Left side*/}
-        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+      {/* ---- Navigation Mobile (Haut) ---- */}
+      <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
+        <div className="flex items-center gap-3">
+          <ProfileTile isMobile />
+          <span className="text-xs md:text-sm font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
+        </div>
+        <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
+      </div>
+
+      <div className="flex grow overflow-hidden relative">
+        {/*Left side (Desktop)*/}
+        <div className={'hidden lg:flex w-32 xl:w-42 h-screen flex-col items-center justify-start p-4 relative'}>
           <ProfileTile />
 
           {/* Flèche Gauche */}
@@ -262,16 +315,7 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 left-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page précédente"
             >
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m15 18-6-6 6-6" />
               </svg>
             </button>
@@ -279,20 +323,20 @@ export default function WiiUPortfolio() {
         </div>
 
         {/*Center*/}
-        <div className={'grow h-screen flex flex-col relative'}>
+        <div className={'grow flex flex-col relative overflow-hidden'}>
           {/*Center Header - Indicateurs de pages*/}
-          <header className="h-20 flex flex-col items-center justify-end pb-4 z-0">
-            <div className="flex space-x-4 items-center">
+          <header className="h-10 md:h-20 flex flex-col items-center justify-end pb-2 md:pb-4 z-10">
+            <div className="flex space-x-2 md:space-x-4 items-center">
               {Array.from({ length: totalPages }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-5 h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
+                  className={`w-2.5 h-2.5 md:w-5 md:h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
-                      ? 'bg-tileselected scale-150 shadow-white/50 drop-shadow-md'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      ? 'bg-tileselected scale-125 md:scale-150 shadow-tileselected/50 drop-shadow-md'
+                      : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400'
                   }
                 `}
                 />
@@ -301,16 +345,50 @@ export default function WiiUPortfolio() {
           </header>
 
           {/* --- ZONE PRINCIPALE : Grille --- */}
-          <div className="grow relative overflow-hidden flex items-center justify-center">
+          <motion.div 
+            className="grow relative overflow-hidden flex items-center justify-center touch-none"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleDragEnd}
+          >
+            {/* Flèches Mobile Overlay - Plus discrètes */}
+            <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-1 z-20 pointer-events-none opacity-50">
+                {currentPage > 0 && (
+                    <button
+                        onClick={() => setCurrentPage((curr) => curr - 1)}
+                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+                )}
+                <div />
+                {currentPage < totalPages - 1 && (
+                    <button
+                        onClick={() => setCurrentPage((curr) => curr + 1)}
+                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </button>
+                )}
+            </div>
+
             {/* Grille animée */}
             <AnimatePresence mode="wait">
               <motion.main
-                key={currentPage}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 grid grid-cols-5 grid-rows-3 gap-6 p-6 place-content-center justify-items-center"
+                key={`${currentPage}-${itemsPerPage}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                    gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+                    gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, minmax(0, 1fr))`
+                }}
+                className="absolute inset-0 grid gap-4 md:gap-6 xl:gap-8 p-4 md:p-6 xl:p-10 place-content-center justify-items-center"
               >
                 {gridSlots.map((app, index) => {
                   if (app) {
@@ -323,7 +401,7 @@ export default function WiiUPortfolio() {
                         onOpen={() => {
                           handleOpen(app.content)
                         }}
-                        bubblePos={index < 5 ? 'bottom' : 'top'}
+                        bubblePos={index < gridCols ? 'bottom' : 'top'}
                       />
                     )
                   } else {
@@ -332,10 +410,10 @@ export default function WiiUPortfolio() {
                 })}
               </motion.main>
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/*Center Footer*/}
-          <footer className="h-36 flex items-center justify-center gap-10 p-2 pb-4">
+          <footer className="h-20 md:h-36 flex items-center justify-center gap-6 md:gap-10 p-2 pb-6">
             {footerApps.map((app, index) => (
               <FooterIcon
                 key={index}
@@ -351,8 +429,8 @@ export default function WiiUPortfolio() {
           </footer>
         </div>
 
-        {/*Right side*/}
-        <div className={'w-42 h-screen flex flex-col items-center justify-start p-4 relative'}>
+        {/*Right side (Desktop)*/}
+        <div className={'hidden lg:flex w-32 xl:w-42 h-screen flex-col items-center justify-start p-4 relative'}>
           <ThemeToggleButton theme={theme} setTheme={setTheme} />
           {/* Flèche Droite */}
           {currentPage < totalPages - 1 && (
@@ -361,22 +439,13 @@ export default function WiiUPortfolio() {
               className="absolute top-1/2 -translate-y-1/2 right-6 z-20 p-6 rounded-full bg-gray-500/20 hover:bg-gray-500/40 text-foreground backdrop-blur-md transition-all border-2 border-transparent hover:border-foreground/50 shadow-lg cursor-pointer"
               aria-label="Page suivante"
             >
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </button>
           )}
         </div>
-      </AnimatePresence>
+      </div>
 
       {/* Overlay dynamique */}
       <DynamicOverlay activeContent={activeContent} onClose={() => setActiveContent(null)} sizeClass={modalSizeClass} />

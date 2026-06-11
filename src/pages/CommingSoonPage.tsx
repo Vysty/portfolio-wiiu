@@ -7,7 +7,7 @@ export default function CommingSoonPage() {
       <h1 className="text-1xl md:text-4xl font-semibold mb-2 tracking-wide">Thomas Marie--Duval</h1>
 
       <h2
-        className="overflow-hidden border-r-2 border-white inline-block text-2xl md:text-6xl font-bold text-center"
+        className="overflow-hidden border-r-2 border-white inline-block text-lg md:text-6xl font-bold text-center"
         style={{
           whiteSpace: 'nowrap',
           animation: 'typing 3s steps(25, end), blink 1.5s step-end infinite',

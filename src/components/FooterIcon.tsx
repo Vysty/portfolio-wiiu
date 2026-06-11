@@ -30,7 +30,7 @@ export default function FooterIcon({
       whileHover="hover"
       variants={tileVariants}
       onClick={handleClick}
-      className={`relative w-28 h-28 flex flex-col items-center justify-center cursor-pointer`}
+      className={`relative w-14 h-14 md:w-20 md:h-20 lg:w-28 lg:h-28 flex flex-col items-center justify-center cursor-pointer`}
     >
       <Bubble pos={'top'} label={label} />
 

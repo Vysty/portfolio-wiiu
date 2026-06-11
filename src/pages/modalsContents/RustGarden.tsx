@@ -1,12 +1,13 @@
 import Badge from '../../components/Badge.tsx'
+import ZoomableImage from '../../components/ZoomableImage.tsx'
 
 export default function RustGarden() {
   return (
     <div className={'flex flex-col h-full'}>
-      <div className="flex flex-col overflow-y-auto h-full w-full p-4 space-y-4 gap-5">
-        <div className="grid w-full grid-cols-[9fr_11fr] gap-10 items-start">
-          <div className={'flex flex-col gap-4 text-justify text-xl min-w-0'}>
-            <h2 className="text-4xl font-bold">Rust Garden</h2>
+      <div className="flex flex-col overflow-y-auto h-full w-full p-2 md:p-4 space-y-4 gap-5">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-[9fr_11fr] gap-6 lg:gap-10 items-start">
+          <div className={'flex flex-col gap-4 text-justify text-base md:text-xl min-w-0 order-2 lg:order-1'}>
+            <h2 className="text-2xl md:text-4xl font-bold">Rust Garden</h2>
             <p>
               RustGarden est un système IoT complet dédié à la surveillance environnementale et à l'automatisation de
               l'entretien des plantes.
@@ -27,18 +28,18 @@ export default function RustGarden() {
               L'application s'appuie sur les données de Trefle.io pour connaître les conditions idéales de la plante.
             </p>
           </div>
-          <div className={'flex items-start justify-center overflow-hidden min-w-0'}>
-            <img
+          <div className={'flex items-start justify-center overflow-hidden min-w-0 order-1 lg:order-2'}>
+            <ZoomableImage
               src="/modalImage/rustGarden.png"
               alt="RustGarden"
-              className="h-auto max-w-full rounded-lg object-contain"
+              className="shadow-md"
             />
           </div>
         </div>
 
-        <div className={'flex flex-col gap-8'}>
-          <h3 className={'text-2xl font-bold'}>Stack Technique :</h3>
-          <div className={'flex justify-around items-start'}>
+        <div className={'flex flex-col gap-6 md:gap-8'}>
+          <h3 className={'text-xl md:text-2xl font-bold'}>Stack Technique :</h3>
+          <div className={'grid grid-cols-2 md:flex md:justify-around items-start gap-4'}>
             <Badge title={'FrontEnd'} content={'Dioxus (Rust), requêtes REST API'}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path

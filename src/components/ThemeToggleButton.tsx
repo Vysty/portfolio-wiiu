@@ -44,9 +44,10 @@ const MoonIcon = () => (
 interface ThemeToggleButtonProps {
   theme: 'light' | 'dark' | null
   setTheme: (theme: 'light' | 'dark') => void
+  isMobile?: boolean
 }
 
-export default function ThemeToggleButton({ theme, setTheme }: ThemeToggleButtonProps) {
+export default function ThemeToggleButton({ theme, setTheme, isMobile = false }: ThemeToggleButtonProps) {
   if (!theme) return null
 
   return (
@@ -56,10 +57,14 @@ export default function ThemeToggleButton({ theme, setTheme }: ThemeToggleButton
       variants={tileVariants}
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       aria-label={theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre'}
-      className="p-4 rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-500 text-foreground bg-background hover:bg-foreground hover:text-background  border-12 border-tilescolor/80 hover:border-tileselected"
+      className={`${
+        isMobile ? 'p-1.5 md:p-2 border-2 md:border-4' : 'p-3 md:p-4 border-8 lg:border-12'
+      } rounded-2xl flex items-center justify-center cursor-pointer shadow-md transition-colors duration-500 text-foreground bg-background hover:bg-foreground hover:text-background border-tilescolor/80 hover:border-tileselected`}
     >
       {/* Si on est en Dark, on montre le soleil pour passer en Light. Sinon, la lune. */}
-      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      <div className={`${isMobile ? 'scale-75 md:scale-90' : 'scale-100 lg:scale-110'}`}>
+        {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      </div>
     </motion.button>
   )
 }

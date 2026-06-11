@@ -34,6 +34,27 @@ body {
   /*--font-TOCHANGE : var(--TOCHANGE);*/
 }
 
+/* Animations personnalisées */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: white }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+/* Styles globaux */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /*noinspection CssUnusedSymbol*/
 :root {
   --background: #edefef;

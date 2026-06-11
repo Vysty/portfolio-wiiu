@@ -270,10 +270,18 @@ export default function WiiUPortfolio() {
     return () => window.removeEventListener('wheel', handleWheel)
   }, [activeContent, totalPages])
 
+  // Gestion du swipe sur mobile
+  const handleDragEnd = (_: any, info: any) => {
+    const swipeThreshold = 50
+    if (info.offset.x < -swipeThreshold) {
+      setCurrentPage((curr) => (curr < totalPages - 1 ? curr + 1 : curr))
+    } else if (info.offset.x > swipeThreshold) {
+      setCurrentPage((curr) => (curr > 0 ? curr - 1 : curr))
+    }
+  }
+
   const gridSlots = Array.from({ length: itemsPerPage }).map((_, index) => {
     const absolutePosition = currentPage * itemsPerPage + index
-    // Note: Pour une meilleure UX sur mobile, on pourrait vouloir retrier les positions
-    // mais ici on garde la logique de position absolue.
     return APPS.find((app) => app.position === absolutePosition) || null
   })
 
@@ -282,12 +290,15 @@ export default function WiiUPortfolio() {
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Navigation Mobile (Haut) ---- */}
-      <div className="lg:hidden flex items-center justify-between p-4 z-10 bg-background/50 backdrop-blur-sm border-b border-foreground/5">
-        <ProfileTile isMobile />
+      <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
+        <div className="flex items-center gap-3">
+          <ProfileTile isMobile />
+          <span className="text-sm font-bold text-foreground/70 uppercase tracking-widest">Thomas</span>
+        </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
 
-      <div className="flex grow overflow-hidden">
+      <div className="flex grow overflow-hidden relative">
         {/*Left side (Desktop)*/}
         <div className={'hidden lg:flex w-42 h-screen flex-col items-center justify-start p-4 relative'}>
           <ProfileTile />
@@ -309,18 +320,18 @@ export default function WiiUPortfolio() {
         {/*Center*/}
         <div className={'grow flex flex-col relative overflow-hidden'}>
           {/*Center Header - Indicateurs de pages*/}
-          <header className="h-12 md:h-20 flex flex-col items-center justify-end pb-2 md:pb-4 z-0">
+          <header className="h-10 md:h-20 flex flex-col items-center justify-end pb-2 md:pb-4 z-10">
             <div className="flex space-x-2 md:space-x-4 items-center">
               {Array.from({ length: totalPages }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-3 h-3 md:w-5 md:h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
+                  className={`w-2.5 h-2.5 md:w-5 md:h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
-                      ? 'bg-tileselected scale-125 md:scale-150 shadow-white/50 drop-shadow-md'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      ? 'bg-tileselected scale-125 md:scale-150 shadow-tileselected/50 drop-shadow-md'
+                      : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400'
                   }
                 `}
                 />
@@ -329,15 +340,20 @@ export default function WiiUPortfolio() {
           </header>
 
           {/* --- ZONE PRINCIPALE : Grille --- */}
-          <div className="grow relative overflow-hidden flex items-center justify-center">
-            {/* Flèches Mobile Overlay */}
-            <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 z-20 pointer-events-none">
+          <motion.div 
+            className="grow relative overflow-hidden flex items-center justify-center touch-none"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleDragEnd}
+          >
+            {/* Flèches Mobile Overlay - Plus discrètes */}
+            <div className="lg:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-1 z-20 pointer-events-none opacity-50">
                 {currentPage > 0 && (
                     <button
                         onClick={() => setCurrentPage((curr) => curr - 1)}
-                        className="p-3 rounded-full bg-gray-500/20 text-foreground backdrop-blur-sm pointer-events-auto cursor-pointer"
+                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
                     >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                             <path d="m15 18-6-6 6-6" />
                         </svg>
                     </button>
@@ -346,9 +362,9 @@ export default function WiiUPortfolio() {
                 {currentPage < totalPages - 1 && (
                     <button
                         onClick={() => setCurrentPage((curr) => curr + 1)}
-                        className="p-3 rounded-full bg-gray-500/20 text-foreground backdrop-blur-sm pointer-events-auto cursor-pointer"
+                        className="p-2 rounded-full bg-gray-500/10 text-foreground backdrop-blur-xs pointer-events-auto cursor-pointer"
                     >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                             <path d="m9 18 6-6-6-6" />
                         </svg>
                     </button>
@@ -359,15 +375,15 @@ export default function WiiUPortfolio() {
             <AnimatePresence mode="wait">
               <motion.main
                 key={`${currentPage}-${itemsPerPage}`}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.2 }}
                 style={{
                     gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
                     gridTemplateRows: `repeat(${Math.ceil(itemsPerPage / gridCols)}, minmax(0, 1fr))`
                 }}
-                className="absolute inset-0 grid gap-2 md:gap-4 lg:gap-6 p-4 md:p-6 place-content-center justify-items-center"
+                className="absolute inset-0 grid gap-3 md:gap-4 lg:gap-6 p-4 md:p-6 place-content-center justify-items-center"
               >
                 {gridSlots.map((app, index) => {
                   if (app) {
@@ -389,10 +405,10 @@ export default function WiiUPortfolio() {
                 })}
               </motion.main>
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/*Center Footer*/}
-          <footer className="h-24 md:h-36 flex items-center justify-center gap-4 md:gap-10 p-2 pb-4">
+          <footer className="h-20 md:h-36 flex items-center justify-center gap-6 md:gap-10 p-2 pb-6">
             {footerApps.map((app, index) => (
               <FooterIcon
                 key={index}

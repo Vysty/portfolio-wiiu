@@ -7,12 +7,14 @@ interface ZoomableImageProps {
   className?: string
 }
 
+// Un composant d'image qui s'agrandit en plein écran lorsqu'on clique dessus.
+// Pratique pour les captures d'écran dans les modales de présentation de projets.
 export default function ZoomableImage({ src, alt, className = '' }: ZoomableImageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      {/* Conteneur de l'image miniature */}
+      {/* Conteneur de l'image miniature avec effet de survol */}
       <div
         className={`relative group cursor-zoom-in overflow-hidden rounded-lg ${className}`}
         onClick={() => setIsOpen(true)}
@@ -23,7 +25,7 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
           className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Overlay au survol (Desktop) */}
+        {/* Overlay avec icône qui apparaît au survol pour indiquer que l'image est cliquable */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 bg-white/20 backdrop-blur-md p-3 rounded-2xl text-white border border-white/30 shadow-xl">
             <svg
@@ -46,13 +48,14 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
         </div>
       </div>
 
-      {/* Vue plein écran (Portal-like via z-index élevé) */}
+      {/* Vue plein écran (overlay) rendue conditionnellement */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            // Un z-index très élevé (200) pour passer au-dessus des modales (qui sont souvent à 50)
             className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
             onClick={() => setIsOpen(false)}
           >
@@ -70,7 +73,7 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
                 className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm border border-white/10"
               />
 
-              {/* Bouton de fermeture plein écran */}
+              {/* Bouton de fermeture en haut à droite */}
               <button
                 className="absolute -top-12 right-0 md:-right-12 md:top-0 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 cursor-pointer"
                 onClick={() => setIsOpen(false)}
@@ -81,7 +84,7 @@ export default function ZoomableImage({ src, alt, className = '' }: ZoomableImag
                 </svg>
               </button>
 
-              {/* Légende discrète */}
+              {/* Légende affichée sous l'image */}
               <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-white/40 text-sm font-medium tracking-widest uppercase">
                 {alt}
               </div>

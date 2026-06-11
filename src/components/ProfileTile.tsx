@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import { tileVariants } from '../styles/FramerConsts.ts'
 import Bubble from './Bubble.tsx'
 
-//TODO : Améliorer le Composant ProfileTile pour les intégrations onclick etc
+// Tuile affichant la photo de profil, servant de lien vers le CV.
+// Sur mobile, on la réduit fortement pour l'intégrer proprement dans le header.
 export default function ProfileTile({ isMobile = false }: { isMobile?: boolean }) {
   return (
     <motion.a
@@ -21,6 +22,7 @@ export default function ProfileTile({ isMobile = false }: { isMobile?: boolean }
         alt={'Image de profile'}
         className="w-full h-full object-cover rounded-lg overflow-hidden "
       />
+      {/* L'infobulle est désactivée sur la version header-mobile pour gagner de la place */}
       {!isMobile && <Bubble pos={'bottom'} label={'Mon CV'} />}
     </motion.a>
   )

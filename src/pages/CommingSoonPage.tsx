@@ -1,5 +1,6 @@
 import '../styles/commingSoonAnimation.css'
 
+// Page d'attente (Coming Soon) utilisée lorsque le portfolio n'était pas encore prêt.
 export default function CommingSoonPage() {
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-slate-900 to-gray-800 flex flex-col items-center justify-center text-white px-4">
@@ -35,7 +36,7 @@ export default function CommingSoonPage() {
         Voir mon CV
       </a>
 
-      {/* Réseaux sociaux*/}
+      {/* Réseaux sociaux */}
       <div className="flex justify-center gap-5 my-3">
         <a
           href="https://www.linkedin.com/in/thomas-marie-duval/"

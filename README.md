@@ -1,54 +1,29 @@
-# React + TypeScript + Vite
+# Portfolio - Interface Façon Wii U
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Il s'agit du code source de mon portfolio.
 
-Currently, two official plugins are available:
+L'idée était de faire un site web qui ne se résume pas à une simple page qu'on fait défiler de haut en bas, mais plutôt
+une application web interactive. Je me suis donc inspiré de l'interface de la console Wii U.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack Technique
 
-## Expanding the ESLint configuration
+- **React & TypeScript**
+- **Vite**
+- **Tailwind CSS**
+- **Framer Motion**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Lancer le projet en local
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Installation des dépendances :
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Lance le serveur de développement :
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+   ```bash
+   npm run dev
+   ```
+
+`http://localhost:5173` dans ton navigateur.

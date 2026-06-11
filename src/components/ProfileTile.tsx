@@ -13,7 +13,7 @@ export default function ProfileTile({ isMobile = false }: { isMobile?: boolean }
       target="_blank"
       rel="noopener noreferrer"
       className={`${
-        isMobile ? 'w-10 h-10 md:w-12 md:h-12' : 'w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32'
+        isMobile ? 'w-12 h-12 md:w-14 md:h-14' : 'w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32'
       } rounded-lg flex flex-col items-center justify-center text-center shadow-lg bg-tilescolor/80 cursor-pointer transition-colors duration-500`}
     >
       <img

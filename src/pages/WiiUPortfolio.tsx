@@ -106,30 +106,33 @@ export default function WiiUPortfolio() {
   // Gestion du nombre d'items par page en fonction de la taille de l'écran
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 640) return 6
-      if (window.innerWidth < 1024) return 9
-      if (window.innerWidth < 1400) return 12
+      const width = window.innerWidth
+      if (width < 640) return 6
+      if (width < 1024) return 9
+      if (width < 1400) return 12
     }
     return 15
   })
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 640) return 2
-      if (window.innerWidth < 1024) return 3
-      if (window.innerWidth < 1400) return 4
+      const width = window.innerWidth
+      if (width < 640) return 2
+      if (width < 1024) return 3
+      if (width < 1400) return 4
     }
     return 5
   })
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
+      const width = window.innerWidth
+      if (width < 640) {
         setItemsPerPage(6)
         setGridCols(2)
-      } else if (window.innerWidth < 1024) {
+      } else if (width < 1024) {
         setItemsPerPage(9)
         setGridCols(3)
-      } else if (window.innerWidth < 1400) {
+      } else if (width < 1400) {
         setItemsPerPage(12)
         setGridCols(4)
       } else {
@@ -295,10 +298,10 @@ export default function WiiUPortfolio() {
       <SplashScreen isLoading={isLoading} />
 
       {/* ---- Navigation Mobile (Haut) ---- */}
-      <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
-        <div className="flex items-center gap-3">
+      <div className="lg:hidden flex items-center justify-between px-6 py-5 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
+        <div className="flex items-center gap-4">
           <ProfileTile isMobile />
-          <span className="text-xs md:text-sm font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
+          <span className="text-sm md:text-base font-bold text-foreground/70 uppercase tracking-widest truncate">Thomas Marie--Duval</span>
         </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
@@ -325,14 +328,14 @@ export default function WiiUPortfolio() {
         {/*Center*/}
         <div className={'grow flex flex-col relative overflow-hidden'}>
           {/*Center Header - Indicateurs de pages*/}
-          <header className="h-10 md:h-20 flex flex-col items-center justify-end pb-2 md:pb-4 z-10">
-            <div className="flex space-x-2 md:space-x-4 items-center">
+          <header className="h-14 md:h-24 flex flex-col items-center justify-end pb-3 md:pb-6 z-10">
+            <div className="flex space-x-3 md:space-x-6 items-center">
               {Array.from({ length: totalPages }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
                   aria-label={`Aller à la page ${index + 1}`}
-                  className={`w-2.5 h-2.5 md:w-5 md:h-5 rounded-md transition-all duration-500 cursor-pointer shadow-sm
+                  className={`w-3.5 h-3.5 md:w-6 md:h-6 rounded-md transition-all duration-500 cursor-pointer shadow-sm
                   ${
                     currentPage === index
                       ? 'bg-tileselected scale-125 md:scale-150 shadow-tileselected/50 drop-shadow-md'
@@ -413,7 +416,7 @@ export default function WiiUPortfolio() {
           </motion.div>
 
           {/*Center Footer*/}
-          <footer className="h-20 md:h-36 flex items-center justify-center gap-6 md:gap-10 p-2 pb-6">
+          <footer className="h-28 md:h-44 flex items-center justify-center gap-8 md:gap-14 p-2 pb-8">
             {footerApps.map((app, index) => (
               <FooterIcon
                 key={index}

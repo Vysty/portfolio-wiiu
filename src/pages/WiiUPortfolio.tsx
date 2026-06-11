@@ -124,7 +124,7 @@ export default function WiiUPortfolio() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1500) // 2000 millisecondes = 2 secondes
+    }, 2500) // 2000 millisecondes = 2 secondes
 
     return () => clearTimeout(timer)
   }, [])

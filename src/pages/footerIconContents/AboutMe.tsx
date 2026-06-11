@@ -2,8 +2,8 @@ import { motion } from 'framer-motion'
 
 export default function AboutMe() {
   return (
-    <div className={'flex flex-col h-full'}>
-      <div className="flex flex-col overflow-y-auto h-full w-full p-4 space-y-4 gap-5">
+    <div className={'flex flex-col h-full overflow-x-hidden'}>
+      <div className="flex flex-col overflow-y-auto overflow-x-hidden h-full w-full p-4 space-y-4 gap-5">
         <div className="flex flex-col gap-4 text-justify text-xl w-full items-start">
           <h2 className="text-4xl font-bold">À propos de moi</h2>
           <p>Je suis Thomas, actuellement en troisième année de BUT Informatique à l'IUT de Valence.</p>
@@ -24,7 +24,7 @@ export default function AboutMe() {
         <div className={'flex flex-col gap-6'}>
           <h3 className={'text-2xl font-bold'}>Stack Technique :</h3>
           <p>Les technologies que j'utilise au quotidien.</p>
-          <div className={'w-full grid grid-cols-3 gap-8 gap-x-12'}>
+          <div className={'w-full grid grid-cols-3 gap-8 gap-x-12 px-5'}>
             <StackBadgeAbout title={'React / React Native'} content={'Interfaces web et mobiles réactives'}>
               <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <title>React</title>

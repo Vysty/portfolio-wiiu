@@ -44,7 +44,7 @@ export default function CommingSoonPage() {
           className="group flex flex-col justify-center items-center w-16"
         >
           <img src="/icons/linkedin.svg" alt="Icone" className="size-6 group-hover:brightness-75 transition" />
-          <p className={'group-hover:text-indigo-400'}>Linkedln</p>
+          <p className={'group-hover:text-indigo-400'}>LinkedIn</p>
         </a>
         <a
           href="https://github.com/Vysty"

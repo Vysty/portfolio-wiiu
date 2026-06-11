@@ -81,12 +81,12 @@ function DynamicOverlay({
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="flex items-center justify-center absolute top-2 right-2 md:top-4 md:right-4 w-8 h-8 md:w-10 md:h-10 text-white rounded-xl bg-black/20 hover:bg-red-500/60 transition duration-400 cursor-pointer z-10"
+              className="flex items-center justify-center absolute top-2 right-2 p-2 w-10 h-10 text-white rounded-2xl bg-black/10 hover:bg-red-500/60 transition duration-400 cursor-pointer z-50"
               onClick={onClose}
             >
               <img src={'/icons/wiiu/cross.png'} alt={'Fermer'} className="w-6 h-6 object-contain" />
             </button>
-            <div className="h-full w-full">{activeContent}</div>
+            <div className="h-full w-full pt-4 md:pt-0">{activeContent}</div>
           </div>
         </motion.div>
       )}
@@ -106,27 +106,32 @@ export default function WiiUPortfolio() {
   // Gestion du nombre d'items par page en fonction de la taille de l'écran
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 768) return 6
-      if (window.innerWidth < 1024) return 9
+      if (window.innerWidth < 550) return 6
+      if (window.innerWidth < 850) return 9
+      if (window.innerWidth < 1150) return 12
     }
     return 15
   })
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (window.innerWidth < 768) return 2
-      if (window.innerWidth < 1024) return 3
+      if (window.innerWidth < 550) return 2
+      if (window.innerWidth < 850) return 3
+      if (window.innerWidth < 1150) return 4
     }
     return 5
   })
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 550) {
         setItemsPerPage(6)
         setGridCols(2)
-      } else if (window.innerWidth < 1024) {
+      } else if (window.innerWidth < 850) {
         setItemsPerPage(9)
         setGridCols(3)
+      } else if (window.innerWidth < 1150) {
+        setItemsPerPage(12)
+        setGridCols(4)
       } else {
         setItemsPerPage(15)
         setGridCols(5)
@@ -293,7 +298,7 @@ export default function WiiUPortfolio() {
       <div className="lg:hidden flex items-center justify-between px-6 py-3 z-30 bg-background/80 backdrop-blur-md border-b border-foreground/5 shadow-sm">
         <div className="flex items-center gap-3">
           <ProfileTile isMobile />
-          <span className="text-sm font-bold text-foreground/70 uppercase tracking-widest">Thomas</span>
+          <span className="text-sm font-bold text-foreground/70 uppercase tracking-widest">Thomas Marie--Duval</span>
         </div>
         <ThemeToggleButton theme={theme} setTheme={setTheme} isMobile />
       </div>
